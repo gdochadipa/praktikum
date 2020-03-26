@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        # code...
+        //   return view('layout.homeAdmin');
     }
 
     public function loginAdmin(Request $request)

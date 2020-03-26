@@ -32,5 +32,7 @@ Route::prefix('admin')->group(function(){
     Route::post('/login', 'AdminController@loginAdmin')->name('admin.login');
 });
 
-
+route::get('/', function (){
+	return view ('layout.homeAdmin');
+});
 
