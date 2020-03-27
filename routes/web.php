@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+Route::get('/', 'HomeController@dashboard')->name('dashboard');
 
 Route::get('/login','UserController@login')->name('user.login')->middleware('guest');
 Route::get('/register','UserController@regis')->name('user.regis')->middleware('guest');
@@ -28,11 +28,17 @@ Route::post('/login', 'UserController@loginUser')->name('user.loginUser');
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'AdminController@showLoginForm')->name('admin.loginForm')->middleware('guest:admin');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/product', 'AdminController@product')->name('admin.product')->middleware('auth:admin');
+    Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('auth:admin');
+    Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
+    Route::get('/product_categories', 'AdminController@product_categories')->name('admin.product_categories')->middleware('auth:admin');
+    Route::get('/courier', 'AdminController@courier')->name('admin.courier')->middleware('auth:admin');
+
+    Route::get('/logout', 'AdminController@logout')->name('admin.logout')->middleware('auth:admin');
 
     Route::post('/login', 'AdminController@loginAdmin')->name('admin.login');
+
 });
 
-route::get('/', function (){
-	return view ('layout.homeAdmin');
-});
+
 

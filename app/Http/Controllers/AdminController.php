@@ -16,8 +16,34 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        //   return view('layout.homeAdmin');
+           return view('layout.admin.homeAdmin');
     }
+
+    public function product()
+    {
+        return view('layout.admin.product');
+    }
+
+    public function users()
+    {
+        return view('layout.admin.user');
+    }
+
+    public function transaction()
+    {
+        return view('layout.admin.transaction');
+    }
+
+    public function product_categories()
+    {
+        return view('layout.admin.product_categories');
+    }
+
+    public function courier()
+    {
+        return view('layout.admin.courier');
+    }
+
 
     public function loginAdmin(Request $request)
     {
@@ -31,5 +57,11 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.loginForm');
     }
 }
