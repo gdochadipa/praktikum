@@ -37,7 +37,7 @@
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Courier</label>
-                                    <input type="text" name="nim" class="form-control" >
+                                    <input type="text" name="courier" >
                                 </div>
                             </div>
                         </div>
