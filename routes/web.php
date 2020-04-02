@@ -25,6 +25,17 @@ Route::post('/register', 'UserController@regisUser')->name('user.regisUser')->mi
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::post('/login', 'UserController@loginUser')->name('user.loginUser');
 
+Route::prefix('admin/courier')->group(function(){
+    Route::get('/', 'CourierController@index')->name('admin.courier')->middleware('auth:admin');
+    Route::get('/add', 'CourierController@create')->name('courier.add')->middleware('auth:admin');
+    Route::get('/{id}/edit', 'CourierController@edit')->name('courier.edit')->middleware('auth:admin');
+
+    Route::post('/store', 'CourierController@store')->name('courier.store')->middleware('auth:admin');
+    Route::post('/{id}/update', 'CourierController@update')->name('courier.update')->middleware('auth:admin');
+    Route::delete('/{id}', 'CourierController@destroy')->name('courier.destroy')->middleware('auth:admin');
+
+});
+
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'AdminController@showLoginForm')->name('admin.loginForm')->middleware('guest:admin');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('auth:admin');
@@ -32,14 +43,11 @@ Route::prefix('admin')->group(function(){
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('auth:admin');
     Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
     Route::get('/product_categories', 'AdminController@product_categories')->name('admin.product_categories')->middleware('auth:admin');
-    
-    Route::get('/courier', 'CourierController@index')->name('admin.courier');
-    Route::get('/tambahcourier', 'CourierController@create')->name('admin.addcourier')->middleware('auth:admin');
 
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));
     });*/
-
+    
 
     Route::get('/logout', 'AdminController@logout')->name('admin.logout')->middleware('auth:admin');
 

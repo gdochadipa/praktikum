@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\courier;
+use App\courier as Courier;
 use App\transaction;
 use Illuminate\Http\Request;
+
 
 class CourierController extends Controller
 {
@@ -27,7 +28,7 @@ class CourierController extends Controller
      */
     public function create()
     {
-        return view('layout.admin.CreateCourier', compact('courier'));
+        return view('layout.admin.courier.CreateCourier');
     }
 
     /**
@@ -38,7 +39,16 @@ class CourierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'courier' => ['required']
+        ]);
+
+        $courier = new Courier;
+        $courier->courier = $request->courier;
+        $courier->save();
+        
+
+        return redirect()->intended(route('admin.courier'));
     }
 
     /**
@@ -58,9 +68,10 @@ class CourierController extends Controller
      * @param  \App\courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function edit(courier $courier)
+    public function edit($id)
     {
-        //
+        $courier = Courier::find($id);
+        return view('layout.admin.courier.update', compact('courier'));
     }
 
     /**
@@ -70,9 +81,14 @@ class CourierController extends Controller
      * @param  \App\courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, courier $courier)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $courier = new Courier();
+        $courier = Courier::find($id);
+
+        $courier->courier = $request->courier;
+        $courier->save();
+        return redirect()->intended(route('admin.courier'));
     }
 
     /**
@@ -83,6 +99,7 @@ class CourierController extends Controller
      */
     public function destroy(courier $courier)
     {
-        //
+        $courier->delete();
+        return redirect()->intended(route('admin.courier'));
     }
 }

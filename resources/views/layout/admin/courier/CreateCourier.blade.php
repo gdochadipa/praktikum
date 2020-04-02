@@ -5,7 +5,7 @@
 @section('nav-courier')
     active
 @endsection
-@section('content'))
+@section('content')
 <style>
 .row{
   margin: 10px;
@@ -28,16 +28,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-						
-						</div>
+					            	</div>
                     </div>
-                    <form action="/tambahcourier"method="POST" enctype="multipart/form-data" >
+                  <form action="{{route('courier.store')}}" method="POST" class="form">
                         @csrf
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Courier</label>
+<<<<<<< HEAD:resources/views/layout/admin/CreateCourier.blade.php
                                     <input type="text" name="courier" >
+=======
+                                    <input type="text" name="courier" value="{{ old('courier') }}"  class="form-control" >
+>>>>>>> ca2789f54c375428dd2ee207b8dedf5cbb37aba3:resources/views/layout/admin/courier/CreateCourier.blade.php
                                 </div>
                             </div>
                         </div>

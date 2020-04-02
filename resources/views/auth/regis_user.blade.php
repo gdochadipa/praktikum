@@ -34,7 +34,7 @@
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">
+                    <span class="input-group-text"> 
                       <i class="material-icons">mail</i>
                     </span>
                   </div>
