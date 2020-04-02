@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\courier;
+use App\transaction;
 use Illuminate\Http\Request;
 use App\admin as Admin;
 use Auth as Auth;
@@ -41,7 +42,7 @@ class AdminController extends Controller
 
     public function courier()
     {
-        return view('layout.admin.courier');
+        //
     }
 
 

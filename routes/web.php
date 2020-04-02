@@ -32,13 +32,19 @@ Route::prefix('admin')->group(function(){
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('auth:admin');
     Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
     Route::get('/product_categories', 'AdminController@product_categories')->name('admin.product_categories')->middleware('auth:admin');
-    Route::get('/courier', 'AdminController@courier')->name('admin.courier')->middleware('auth:admin');
+    
+    Route::get('/courier', 'CourierController@index')->name('admin.courier');
+    Route::get('/tambahcourier', 'CourierController@create')->name('admin.addcourier')->middleware('auth:admin');
+
+    /*Route::get('/addcourier', function(){
+        return view('CreateController', compact('courier'));
+    });*/
+
 
     Route::get('/logout', 'AdminController@logout')->name('admin.logout')->middleware('auth:admin');
 
     Route::post('/login', 'AdminController@loginAdmin')->name('admin.login');
 
 });
-
 
 
