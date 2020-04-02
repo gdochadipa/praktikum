@@ -15,7 +15,7 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">  Courier</h4>
-                    <li class="d-none d-lg-block"> <a href="/admin/tambahcourier" class="btn header-btn">Add Courier</a>
+                <li class="d-none d-lg-block"> <a href="{{route('admin.addcourier')}}" class="btn header-btn">Add Courier</a>
                     </li>
                 </div>
                 <div class="card-body">
