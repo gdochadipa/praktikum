@@ -15,7 +15,7 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">  Courier</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('admin.addcourier')}}" class="btn header-btn">Add Courier</a>
+                <li class="d-none d-lg-block"> <a href="{{route('courier.add')}}" class="btn header-btn">Add Courier</a>
                     </li>
                 </div>
                 <div class="card-body">
@@ -41,17 +41,19 @@
                                 <td>
                                   {{$crier->courier}}
                                 </td>
-                                <td>
-                                  <span>
-                                    <input type="button" value="Edit" onclick="location.href='/courier/{{$crier->id}}/edit'">
-                                      <form style="display:inline-block;" action="/courier/{{$crier->id}}" method="post">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                    <input type="submit" value="Delete">
-                                    </form>
-                                    <input type="button" value="Details" onclick="location.href='/courier/{{$crier->id}}'">
-                                  </span>
-                                </td>
+                                <td class="td-actions text-left">
+                                <a href="{{route('courier.edit',$crier->id)}}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                   <i class="material-icons">edit</i>
+                                </a>
+                                <form style="display:inline-block;" action="{{route('courier.destroy',['id'=>$crier->id])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">close</i>
+                                  </button>
+                                </form>
+                                
+                              </td>
                               </tr>
                             @endforeach
                  
