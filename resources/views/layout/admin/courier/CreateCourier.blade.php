@@ -36,11 +36,7 @@
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Courier</label>
-<<<<<<< HEAD:resources/views/layout/admin/CreateCourier.blade.php
-                                    <input type="text" name="courier" >
-=======
                                     <input type="text" name="courier" value="{{ old('courier') }}"  class="form-control" >
->>>>>>> ca2789f54c375428dd2ee207b8dedf5cbb37aba3:resources/views/layout/admin/courier/CreateCourier.blade.php
                                 </div>
                             </div>
                         </div>
