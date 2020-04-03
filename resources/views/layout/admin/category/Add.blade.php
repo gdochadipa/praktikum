@@ -1,8 +1,8 @@
 @extends('components.admin.app_dash')
 @section('title')
-   Tambah Courier
+   Tambah Product Categories
 @endsection
-@section('nav-courier')
+@section('nav-categories')
     active
 @endsection
 @section('content')
@@ -21,7 +21,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-primary>
+                <div class="card-header card-header-rose">
                     <i class="material-icons">people_alt</i>
                   <h4 class="card-title "> </h4>
                 </div>
@@ -30,18 +30,20 @@
                         <div class="col-12">
 					            	</div>
                     </div>
-                  <form action="{{route('courier.update',['id'=>$courier->id])}}" method="POST" class="form">
+                  <form action="{{route('category.store')}}" method="POST" class="form">
                         @csrf
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
-                                    <label class="bmd-label-floating">Courier</label>
-                                <input type="text" name="courier" value="{{$courier->courier}}"  class="form-control" >
+                                    <label class="bmd-label-floating">Category Name</label>
+                                    <input type="text" name="name" value="{{ old('category_name') }}"  class="form-control" >
+                                </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <input type="submit" value="Change" class="btn btn-success pull-right">
+                        <input type="submit" value="Tambah" class="btn btn-success pull-right">
                     </form>
                 </div>
               </div>

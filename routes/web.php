@@ -29,20 +29,38 @@ Route::prefix('admin/courier')->group(function(){
     Route::get('/', 'CourierController@index')->name('admin.courier')->middleware('auth:admin');
     Route::get('/add', 'CourierController@create')->name('courier.add')->middleware('auth:admin');
     Route::get('/{id}/edit', 'CourierController@edit')->name('courier.edit')->middleware('auth:admin');
-
     Route::post('/store', 'CourierController@store')->name('courier.store')->middleware('auth:admin');
     Route::post('/{id}/update', 'CourierController@update')->name('courier.update')->middleware('auth:admin');
     Route::delete('/{id}', 'CourierController@destroy')->name('courier.destroy')->middleware('auth:admin');
 
 });
 
+Route::prefix('admin/product')->group(function(){
+    Route::get('/', 'ProductController@index')->name('admin.product')->middleware('auth:admin');
+    Route::get('/add', 'ProductController@create')->name('product.add')->middleware('auth:admin');
+    Route::get('/{id}/edit', 'ProductController@edit')->name('product.edit')->middleware('auth:admin');
+    Route::post('/store', 'ProductController@store')->name('product.store')->middleware('auth:admin');
+    Route::post('/{id}/edit', 'ProductController@update')->name('product.edit')->middleware('auth:admin');
+    Route::delete('/{id}', 'ProductController@destroy')->name('product.destroy')->middleware('auth:admin');
+
+});
+
+Route::prefix('admin/category')->group(function(){
+    Route::get('/', 'ProductCategoriesController@index')->name('admin.category')->middleware('auth:admin');
+    Route::get('/add', 'ProductCategoriesController@create')->name('category.add')->middleware('auth:admin');
+    Route::get('/{id}/edit', 'ProductCategoriesController@edit')->name('category.edit')->middleware('auth:admin');
+    Route::post('/store', 'ProductCategoriesController@store')->name('category.store')->middleware('auth:admin');
+    Route::post('/{id}/edit', 'ProductCategoriesController@update')->name('category.edit')->middleware('auth:admin');
+    Route::delete('/{id}', 'ProductCategoriesController@destroy')->name('category.destroy')->middleware('auth:admin');
+
+});
+
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'AdminController@showLoginForm')->name('admin.loginForm')->middleware('guest:admin');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('auth:admin');
-    Route::get('/product', 'AdminController@product')->name('admin.product')->middleware('auth:admin');
+    
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('auth:admin');
     Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
-    Route::get('/product_categories', 'AdminController@product_categories')->name('admin.product_categories')->middleware('auth:admin');
 
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));

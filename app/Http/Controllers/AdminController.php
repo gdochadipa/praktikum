@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function product()
     {
-        return view('layout.admin.product');
+       //
     }
 
     public function users()
@@ -37,7 +37,7 @@ class AdminController extends Controller
 
     public function product_categories()
     {
-        return view('layout.admin.product_categories');
+       //
     }
 
     public function courier()

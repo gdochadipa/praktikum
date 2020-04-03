@@ -57,7 +57,7 @@
             </a>
           </li>
           <li class="nav-item @yield('nav-categories')">
-            <a class="nav-link" href="{{route('admin.product_categories')}}">
+            <a class="nav-link" href="{{route('admin.category')}}">
               <i class="material-icons">shopping_bask</i>
               <p>Product Categories</p>
             </a>

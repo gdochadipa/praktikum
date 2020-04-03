@@ -14,61 +14,46 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">  Product Categories</h4>
+                  <li class="d-none d-lg-block"> <a href="{{route('category.add')}}" class="btn header-btn">Add New Category</a>
+                    </li>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     
-                   {{-- @if ($pemilih->isEmpty()) --}}
-                        {{-- <div class="row">
-                            <div class="col-md-12">
-                              <div class="alert alert-danger">
-							                  <div>Data kosong</div>
-					                  	</div>
-                            </div>
-                        </div> --}}
-                  {{-- @else --}}
                     <table class="table">
                       <thead class=" text-info">
                         <th>
                           ID
                         </th>
                         <th>
-                          Nama Barang
+                          Category_name
                         </th>
-                        
                       </thead>
-                      <tbody>
-{{--                         
-                            @foreach ($pemilih as $i)
+                      <tbody> 
+                            @foreach ($all_category as $category)
                               <tr>
                             <td>
                               {{$loop->iteration}}
                             </td>
                             <td>
-                              {{$i->nama}}
+                              {{$category->category_name}}
                             </td>
-                            <td>
-                              {{$i->fakultas}}
-                            </td>
-                            <td>
-                              {{$i->prodi}}
-                            </td>
-                           
+                           <td class="td-actions text-left">
+                                <a href="{{route('category.edit',$category->id)}}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                   <i class="material-icons">edit</i>
+                                </a>
+                                <form style="display:inline-block;" action="{{route('category.destroy',['id'=>$category->id])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">delete</i>
+                                  </button>
+                                </form>
                             
-                            <td class="td-actions text-left">
-                                @if ($i->id_calon==null)
-                                    <p class="text-danger">Belum</p>
-                                @else
-                                     <p class="text-success">Sudah</p>
-                                @endif
-                                
                               </td>
                           </tr>
                           @endforeach
-                      
-                    
-                     {{$pemilih->links()}}
-                    @endif --}}
+
                     </tbody>
                     </table>
                   </div>

@@ -1,8 +1,8 @@
 @extends('components.admin.app_dash')
 @section('title')
-   Tambah Courier
+   Tambah Product
 @endsection
-@section('nav-courier')
+@section('nav-categories')
     active
 @endsection
 @section('content')
@@ -30,13 +30,14 @@
                         <div class="col-12">
 					            	</div>
                     </div>
-                  <form action="{{route('courier.update',['id'=>$courier->id])}}" method="POST" class="form">
+                  <form action="{{route('category.edit',['id'=>$category->id])}}" method="POST" class="form">
                         @csrf
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
-                                    <label class="bmd-label-floating">Courier</label>
-                                <input type="text" name="courier" value="{{$courier->courier}}"  class="form-control" >
+                                    <label class="bmd-label-floating">Categories Name</label>
+                                    <input type="text" name="category_name" value="{{$category->category_name}}"  class="form-control" >
+                                </div>
                                 </div>
                             </div>
                         </div>
