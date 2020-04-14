@@ -10,6 +10,11 @@
 <body>
     <h2>Hai, {{ $user->name }}</h2>
     <p>Terima kasih telah melakukan transaksi pada aplikasi kami</p>
-<p>Jangan lupa untuk melakukan verifikasi pendaftaran  <a href="{{route('user.verify',['token'=>$user->email])}}">Disini</a></p>
+<p>Jangan lupa untuk melakukan verifikasi pendaftaran  <a href="{{route('user.verify',['token'=>$password])}}">Disini</a></p>
+{{-- <form action="{{route('user.verify')}}" method="post">
+        <input type="text" name="email" value="{{$user->email}}" hidden>
+        <input type="password" name="password" value="{{$user->password}}" value="" hidden>
+        <input type="submit" name="submit" value="Verifikasi pendaftaran">
+    </form> --}}
 </body>
 </html>

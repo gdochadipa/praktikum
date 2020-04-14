@@ -13,7 +13,7 @@ class HomeController extends Controller
 
         public function dashboard()
     {
-        return view('layout.homeUser');
+        return view('layout.user.index');
     }
 
 

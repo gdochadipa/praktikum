@@ -11,10 +11,10 @@
       <div class="row">
         <div class="col-lg-6 col-md-8 ml-auto mr-auto">
           <div class="card card-login">
-          <form class="form" method="POST" action="{{route('user.regisUser')}}">
+          <form class="form" method="POST" action="{{route('user.forgetPass')}}">
             @csrf  
             <div class="card-header card-header-primary text-center">
-                <h4 class="card-title">Login</h4>
+                <h4 class="card-title">Forget Password</h4>
                 <div class="social-line">
                   
                   </a>
@@ -25,14 +25,6 @@
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">face</i>
-                    </span>
-                  </div>
-                  <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="First Name...">
-                </div>
-                <div class="input-group">
-                  <div class="input-group-prepend">
                     <span class="input-group-text"> 
                       <i class="material-icons">mail</i>
                     </span>
@@ -40,28 +32,10 @@
                   <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email...">
                 </div>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <input type="password" name="password" class="form-control" placeholder="Password...">
-                </div>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password...">
-                </div>
-                 <div class="input-group">
                   <input type="submit" style="width:1000px!important;margin-left:10px;" class="btn btn-primary" placeholder="" value="REGISTRATION">
                  
                 </div>
-                <div class="input-group">
-                   <a href="{{route('user.login')}}" class="btn btn-primary btn-link btn-wd btn-lg ml-auto mr-auto">Login</a>
-                </div>
+                @include('components.notification')
               </div>
               
             </form>

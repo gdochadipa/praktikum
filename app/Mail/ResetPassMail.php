@@ -6,10 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Crypt;
 use App\user as User;
 
-class UserRegisterMail extends Mailable
+class ResetPassMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,12 +19,11 @@ class UserRegisterMail extends Mailable
      */
 
     protected $user;
-    protected $randomPassword;
-
-    public function __construct(User $user, $randomPassword)
+    protected $token;
+    public function __construct(User $user, $token)
     {
         $this->user = $user;
-        $this->randomPassword = Crypt::encryptString($user->email);
+        $this->token = $token;
     }
 
     /**
@@ -35,14 +33,12 @@ class UserRegisterMail extends Mailable
      */
     public function build()
     {
-
-        // dd($this->user);
         return $this->from('gdochadipa@gmail.com')
-        ->subject('Verifikasi pendaftaran anda')
-        ->view('emails.verify')
-        ->with([
-            'user' =>$this->user,
-            'password'=>$this->randomPassword
-        ]);
+            ->subject('Reset Password')
+            ->view('emails.reset')
+            ->with([
+                'user' => $this->user,
+                'token' => $this->token
+            ]);
     }
 }

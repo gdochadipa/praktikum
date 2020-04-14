@@ -20,7 +20,13 @@ Route::get('/login','UserController@login')->name('user.login')->middleware('gue
 Route::get('/register','UserController@regis')->name('user.regis')->middleware('guest');
 
 Route::get('user/{token}', 'UserController@verify')->name('user.verify');
+Route::get('resetToken/{token}', 'UserController@reset')->name('user.token')->middleware('guest');
 Route::post('/register', 'UserController@regisUser')->name('user.regisUser')->middleware('guest');
+
+Route::get('/forget', 'UserController@forget')->name('user.forget')->middleware('guest');
+Route::get('/reset', 'UserController@reset')->name('user.reset')->middleware('guest');
+Route::post('/resetPass/{id}', 'UserController@resetPass')->name('user.resetPass')->middleware('guest');
+Route::post('/forgetpass', 'UserController@forgetPass')->name('user.forgetPass')->middleware('guest');
 
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::post('/login', 'UserController@loginUser')->name('user.loginUser');

@@ -6,7 +6,7 @@
 
 @section('component')
     
-<body class="login-page sidebar-collapse">
+
   <div class="page-header header-filter" style="background-image: url('auth_user/assets/img/bg7.jpg'); background-size: cover; background-position: top center;">
     <div class="container">
       <div class="row">
@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div class="footer text-center">
-                <a href="" class="btn btn-primary btn-link btn-wd btn-lg">Forget password?</a>
+              <a href="{{route('user.forget')}}" class="btn btn-primary btn-link btn-wd btn-lg">Forget password?</a>
               </div>
             </form>
           </div>

@@ -20,9 +20,14 @@
   <link href="{{ asset('auth_user/assets/demo/demo.css')}}" rel="stylesheet" />
 </head>
 
+<body class="login-page sidebar-collapse">
+@include('components.notification')
 @yield('component')
 
-@include('components.notification')
+
+
+
+
       <!--   Core JS Files   -->
   <script src="{{ asset('auth_user/assets/js/core/jquery.min.js')}}" type="text/javascript"></script>
   <script src="{{ asset('auth_user/assets/js/core/popper.min.js')}}" type="text/javascript"></script>

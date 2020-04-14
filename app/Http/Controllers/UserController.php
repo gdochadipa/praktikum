@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth as Auth;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use App\user as User;
 use App\Mail\UserRegisterMail;
+use App\Mail\ResetPassMail;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Mail;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -46,24 +53,25 @@ class UserController extends Controller
         $user = User::where('email', $request->email)->get();
 
 
-         if(Auth::attempt(['email' => $request->email,'password'=> $request->password], true) ){
-            Mail::to($request->email)->send(new UserRegisterMail($user[0], $request->name));
+        //  if(Auth::attempt(['email' => $request->email,'password'=> $request->password], true) ){
 
-         } 
 
-        return "gagal";
+        //  } 
+       if(Mail::to($request->email)->send(new UserRegisterMail($user[0], $request->name))){
+            return view('auth.user_email_confirmed');
+       }
+        
+
         return redirect()->back()->withInput($request->only('name','email'))->with('error', 'Please fill in all fields with valid value');
     }
 
     public function verify($token)
     {
-        $user = user::where('email', $token)
-            ->update([
-                'status' => 1
-            ]);
+        $email = Crypt::decryptString($token);
+        $user = user::where('email','=',$email)->update(['email_verified_at' => Carbon::now()->toDateTimeString()]);
         if($user){
-            
-            return "anda berhasil verifikasi";
+
+            return redirect()->route('user.login');
         }
         return "gagal melakukan verifikasi";
     }
@@ -87,4 +95,66 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('user.login');
     }
+
+    public function forget()
+    {
+        return  view('auth.reset_password');
+    }
+
+    public function forgetPass(Request $request)
+    {
+        $request->validate([
+            'email' => ['required']
+        ]);
+        
+        $user = User::where('email','=',$request->email)->first();
+        // dd($user);
+        if ($user->email == null) {
+            return redirect()->back()->withErrors(['email' => trans('User does not exist')]);
+        }
+
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => Str::random(12),
+            'created_at' => Carbon::now()
+        ]);
+
+        $reset =DB::table('password_resets')->where('email','=', $request->email)->first();
+        
+        if(Mail::to($request->email)->send(new ResetPassMail($user, $reset->token))){
+            $request->session()->flash('success', 'Berhasil mereset password, silahkan anda cek email');
+            return redirect()->back();
+        }
+
+        return redirect()->back()->withInput($request->only('name', 'email'))->with('success', 'Berhasil mereset password, silahkan anda cek email');
+        
+    }
+
+    public function reset($token)
+    {
+        $reset = DB::table('password_resets')->where('token', '=', $token)->first();
+
+        $user = User::where('email', '=', $reset->email)->first();
+
+        return view('auth.new_pass',compact('user'));
+
+    }
+
+    public function resetPass(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        
+       if($user->save()){
+            return redirect()->intended(route('user.login'))->with('success', 'Berhasil mengganti password');
+       }
+        return redirect()->back()->with('error', 'Gagal mengganti password'); 
+
+    }
+
+
 }
