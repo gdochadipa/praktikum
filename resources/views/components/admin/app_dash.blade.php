@@ -198,7 +198,7 @@
   <!-- Library for adding dinamically elements -->
   <script src={{asset('admin/assets/js/plugins/arrive.min.js')}}></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  {{-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
   <!-- Chartist JS -->
   <script src={{asset('admin/assets/js/plugins/chartist.min.js')}}></script>
   <!--  Notifications Plugin    -->
@@ -375,6 +375,100 @@
           }, 1000);
 
         });
+
+          $(document).ready(function() {
+      if ($('.card-header.card-chart').length != 0) {
+        md.initDashboardPageCharts();
+      }
+
+      if ($('#websiteViewsChart').length != 0) {
+        md.initDocumentationCharts();
+      }
+
+
+
+
+
+      if ($('.datetimepicker').length != 0) {
+        md.initFormExtendedDatetimepickers();
+      }
+      if ($('#fullCalendar').length != 0) {
+        md.initFullCalendar();
+      }
+
+      if ($('.slider').length != 0) {
+        md.initSliders();
+      }
+
+      //  Activate the tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+
+      // Activate Popovers
+      $('[data-toggle="popover"]').popover();
+
+      // Vector map
+      if ($('#worldMap').length != 0) {
+        md.initVectorMap();
+      }
+
+      if ($('#RegisterValidation').length != 0) {
+
+        setFormValidation('#RegisterValidation');
+
+        function setFormValidation(id) {
+          $(id).validate({
+            highlight: function(element) {
+              $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+              $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+            },
+            success: function(element) {
+              $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+              $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+            },
+            errorPlacement: function(error, element) {
+              $(element).closest('.form-group').append(error);
+            },
+          });
+        }
+      }
+
+    });
+
+    // FileInput
+    $('.form-file-simple .inputFileVisible').click(function() {
+      $(this).siblings('.inputFileHidden').trigger('click');
+    });
+
+    $('.form-file-simple .inputFileHidden').change(function() {
+      var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+      $(this).siblings('.inputFileVisible').val(filename);
+    });
+
+    $('.form-file-multiple .inputFileVisible, .form-file-multiple .input-group-btn').click(function() {
+      $(this).parent().parent().find('.inputFileHidden').trigger('click');
+      $(this).parent().parent().addClass('is-focused');
+    });
+
+    $('.form-file-multiple .inputFileHidden').change(function() {
+      var names = '';
+      for (var i = 0; i < $(this).get(0).files.length; ++i) {
+        if (i < $(this).get(0).files.length - 1) {
+          names += $(this).get(0).files.item(i).name + ',';
+        } else {
+          names += $(this).get(0).files.item(i).name;
+        }
+      }
+      $(this).siblings('.input-group').find('.inputFileVisible').val(names);
+    });
+
+    $('.form-file-multiple .btn').on('focus', function() {
+      $(this).parent().siblings().trigger('focus');
+    });
+
+    $('.form-file-multiple .btn').on('focusout', function() {
+      $(this).parent().siblings().trigger('focusout');
+    });
+
       });
     });
   </script>

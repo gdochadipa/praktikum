@@ -36,7 +36,7 @@
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Category Name</label>
-                                    <input type="text" name="name" value="{{ old('category_name') }}"  class="form-control" >
+                                    <input type="text" name="category_name" value="{{ old('category_name') }}"  class="form-control" >
                                 </div>
                                 </div>
                                 </div>

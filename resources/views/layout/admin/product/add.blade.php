@@ -2,7 +2,7 @@
 @section('title')
    Tambah Product
 @endsection
-@section('nav-categories')
+@section('nav-product')
     active
 @endsection
 @section('content')
@@ -17,6 +17,7 @@
 </style>
 
  <div class="content">
+   @include('components.notification')
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -30,17 +31,17 @@
                         <div class="col-12">
 					            	</div>
                     </div>
-                  <form action="{{route('product.store')}}" method="POST" class="form">
+                  <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" class="form">
                         @csrf
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Product Name</label>
-                                    <input type="text" name="name" value="{{ old('product_name') }}"  class="form-control" >
+                                    <input type="text" name="product_name" value="{{ old('product_name') }}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">price</label>
-                                    <input type="text" name="price" value="{{ old('price') }}"  class="form-control" >
+                                    <input type="number" name="price" value="{{ old('price') }}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Description</label>
@@ -48,16 +49,27 @@
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Product Rate</label>
-                                    <input type="text" name="rate" value="{{ old('product_rate') }}"  class="form-control" >
+                                    <input type="number" name="product_rate" value="{{ old('product_rate') }}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Stock</label>
-                                    <input type="text" name="stock" value="{{ old('stock') }}"  class="form-control" >
+                                    <input type="number" name="stock" value="{{ old('stock') }}"  class="form-control"  >
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Weight</label>
-                                    <input type="text" name="weight" value="{{ old('weight') }}"  class="form-control" >
+                                    <input type="number" name="weight" value="{{ old('weight') }}"  class="form-control" step="0.01" min="0" max="999">
                                 </div>
+                                <div class="form-group bmd-form-group form-file-upload form-file-multiple">
+                                <input type="file" multiple="" name="product_images[]" class="inputFileHidden">
+                                <div class="input-group">
+                                    <input type="text" class="form-control inputFileVisible" placeholder="Product Images" multiple>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-round btn-info">
+                                            <i class="material-icons">layers</i>
+                                        </button>
+                                    </span>
+                                </div>
+                              </div>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 @if ($errors->any())
     @foreach ($errors->all() as $message)
-         <div class="alert alert-danger">
+         <div class="alert alert-danger animated fadeInDown">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>
@@ -10,7 +10,7 @@
         
     @endforeach
 @elseif (session('error'))
-    <div class="alert alert-danger">
+    <div class="alert alert-danger animated fadeInDown">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>
@@ -18,7 +18,7 @@
                       <b> Danger - </b> {{ session('error') }}</span>
                   </div>
 @elseif (session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success animated fadeInDown">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>

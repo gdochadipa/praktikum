@@ -7,6 +7,7 @@
 @endsection
 @section('content')
     <div class="content">
+       @include('components.notification')
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -29,9 +30,6 @@
                           Product Name
                         </th>
                         <th>
-                          Category Name
-                        </th>
-                        <th>
                           Price
                         </th>
                         <th>
@@ -45,6 +43,9 @@
                         </th>
                         <th>
                           Weight
+                        </th>
+                        <th>
+                          Action
                         </th>
                         
                       </thead>
@@ -84,6 +85,9 @@
                                     <i class="material-icons">delete</i>
                                   </button>
                                 </form>
+                                <a href="{{route('product.edit',$produk->id)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
+                                   <i class="material-icons">edit</i>
+                                </a>
                             
                               </td>
                           </tr>
