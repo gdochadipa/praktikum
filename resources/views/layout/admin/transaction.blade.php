@@ -33,7 +33,40 @@
                           ID
                         </th>
                         <th>
-                          Nama Barang
+                          Timeout
+                        </th>
+                        <th>
+                          Address
+                        </th>
+                        <th>
+                          Regency
+                        </th>
+                        <th>
+                          Province
+                        </th>
+                        <th>
+                          Total
+                        </th>
+                        <th>
+                          Shipping Cost
+                        </th>
+                        <th>
+                          Sub Total
+                        </th>
+                        <th>
+                          User Name
+                        </th>
+                        <th>
+                          Courier
+                        </th>
+                        <th>
+                          Proof of payment
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                        <th>
+                          Action
                         </th>
                         
                       </thead>

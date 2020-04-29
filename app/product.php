@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class product extends Model
 {
-    //
+    public function product_review()
+    {
+        return $this->hasMany('App\product_review');
+    }
+    
+    public function transaction_detail()
+    {
+        return $this->hasMany('App\transaction_detail');
+    }
 }

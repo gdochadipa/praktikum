@@ -68,6 +68,12 @@
               <p>Transaction</p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{route('admin.transaction')}}">
+              <i class="material-icons">shopping_chart</i>
+              <p>Discount</p>
+            </a>
+          </li>
          
         </ul>
       </div>

@@ -49,6 +49,10 @@ Route::prefix('admin/product')->group(function(){
     Route::post('/{id}/edit', 'ProductController@update')->name('product.edit')->middleware('auth:admin');
     Route::delete('/{id}', 'ProductController@destroy')->name('product.destroy')->middleware('auth:admin');
 
+    Route::post('/{id}/add_image', 'ProductController@add_image')->name('product.add_image')->middleware('auth:admin');
+    Route::delete('/{id}/delete_image', 'ProductController@delete_image')->name('product.delete_image')->middleware('auth:admin');
+    Route::post('/{id}/add_cat', 'ProductController@add_cat')->name('product.add_cat')->middleware('auth:admin');
+    Route::delete('/{id}/delete_cat', 'ProductController@delete_cat')->name('product.delete_cat')->middleware('auth:admin');
 });
 
 Route::prefix('admin/category')->group(function(){
@@ -59,6 +63,25 @@ Route::prefix('admin/category')->group(function(){
     Route::post('/{id}/edit', 'ProductCategoriesController@update')->name('category.edit')->middleware('auth:admin');
     Route::delete('/{id}', 'ProductCategoriesController@destroy')->name('category.destroy')->middleware('auth:admin');
 
+});
+
+Route::prefix('admin/review')->group(function () {
+    Route::get('/', 'ProductReviewController@index')->name('admin.review')->middleware('auth:admin');
+    Route::get('/add', 'ProductReviewController@create')->name('review.add')->middleware('auth:admin');
+    Route::get('/{id}/edit', 'ProductReviewController@edit')->name('review.edit')->middleware('auth:admin');
+    Route::post('/store', 'ProductReviewController@store')->name('review.store')->middleware('auth:admin');
+    Route::put('/{id}/edit', 'ProductReviewController@update')->name('review.update')->middleware('auth:admin');
+    Route::delete('/{id}', 'ProductReviewController@destroy')->name('review.destroy')->middleware('auth:admin');
+});
+
+Route::prefix('admin/response')->group(function () {
+    Route::get('/', 'ResponseController@index')->name('admin.response')->middleware('auth:admin');
+    Route::get('/add', 'ResponseController@create')->name('response.add')->middleware('auth:admin');
+    Route::get('/{review}/add', 'ResponseController@add_response')->name('response.add_response')->middleware('auth:admin');
+    Route::get('/{response}/edit', 'ResponseController@edit')->name('response.edit')->middleware('auth:admin');
+    Route::post('/store', 'ResponseController@store')->name('response.store')->middleware('auth:admin');
+    Route::put('/{id}/update', 'ResponseController@update')->name('response.update')->middleware('auth:admin');
+    Route::delete('/{id}', 'ResponseController@destroy')->name('response.destroy')->middleware('auth:admin');
 });
 
 Route::prefix('admin')->group(function(){

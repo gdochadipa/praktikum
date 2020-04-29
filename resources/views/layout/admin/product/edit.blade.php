@@ -77,7 +77,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                      <form action="" method="POST" enctype="multipart/form-data" class="form">
+                      <form action="{{route('product.add_image',['id'=>$product->id])}}" method="POST" enctype="multipart/form-data" class="form">
                         @csrf
                          <div class="row">
                             <div class="col-md-12">
@@ -91,6 +91,7 @@
                                         </button>
                                     </span>
                                 </div>
+                                <input type="submit" name="submit" value="Add Image" class="btn btn-success pull-right">
                               </div>
                             </div>
                          </div>  
@@ -108,45 +109,68 @@
                         </th>
                       </thead>
                       <tbody>
-                        <tr>
+                       @if ($image->isEmpty())
+                           <tr>
+                             <td>
+                               Gambar kosong
+                             </td>
+                           </tr>
+                       @else
+                            @foreach ($image as $i)
+                            <tr>
                           <td>
-                            1
+                            {{$loop->iteration}}
                           </td>
                           <td>
-                            Dakota Rice
+                            <img src="{{asset('product_images/'.$i->image_name)}}" style="width:260px;" alt="">
+                           
                           </td>
-                          <td>
-                            $36,738
+                          <td class="td-actions text-left" >
+                            <form style="display:inline-block;" action="{{route('product.delete_image',['id'=>$i->id])}}" method="post">
+                              
+                                    @csrf
+                                    @method('DELETE')
+                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">delete</i>
+                                  </button>
+                                </form>
                           </td>
                         </tr>
+                        @endforeach
+                       @endif
                       </tbody>
-                    </table>
+                     </table>
+                      {{$image->links()}}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             {{-- productImage end --}}
+
              {{-- product Category --}}
-             <div class="col-md-12">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Product Images</h4>
-                  <p class="card-category"> Here is a subtitle for this table</p>
+                  <h4 class="card-title ">Product Categories</h4>
+                  <p class="card-category"> </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <form action="" method="post"  class="form">
+                    <form action="{{route('product.add_cat',['id'=>$product->id])}}" method="post"  class="form">
                       @csrf
                       <div class="form-group">
                         <label >Product Categories</label>
-                        <select  class="form-control" data-style=" btn btn-link">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                        <select  class="form-control" name="product_category" data-style=" btn btn-link">
+                          @if ($product_categories->isEmpty())
+                              <option disabled>Category Product</option>
+                          @else
+                               <option selected disabled>-- Category Product --</option>
+                              @foreach ($product_categories as $pc)
+                                <option value="{{$pc->id}}">{{$pc->category_name}}</option>
+                              @endforeach
+                          @endif
                         </select>
-                        <input type="submit" name="submit" value="">
+                        <input type="submit" name="submit" value="Add Category" class="btn btn-success pull-right">
                       </div>
                     </form>
 
@@ -156,44 +180,114 @@
                           ID
                         </th>
                         <th>
-                          Name
+                          Name Category
                         </th>
                         <th>
-                          Country
-                        </th>
-                        <th>
-                          City
-                        </th>
-                        <th>
-                          Salary
+                          Action
                         </th>
                       </thead>
                       <tbody>
+                       @if ($product_category_details->isEmpty())
+                           
+                       @else
+                        @foreach ($product_category_details as $det)
+                            
                         <tr>
                           <td>
-                            1
+                          {{$loop->iteration}}
                           </td>
                           <td>
-                            Dakota Rice
+                            
+                            {{$det->product_categories->category_name}}
                           </td>
-                          <td>
-                            Niger
-                          </td>
-                          <td>
-                            Oud-Turnhout
-                          </td>
-                          <td class="text-primary">
-                            $36,738
+                          <td class="td-actions text-left" >
+                            <form style="display:inline-block;" action="{{route('product.delete_image',['id'=>$i->id])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">delete</i>
+                                  </button>
+                                </form>
                           </td>
                         </tr>
+                          @endforeach
+                       @endif
                       </tbody>
                     </table>
                   </div>
+                  {{$product_category_details->links()}}
                 </div>
               </div>
             </div>
             {{-- product Category  end--}}
 
+
+            {{-- product review --}}
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Product Review</h4>
+                  <p class="card-category"> </p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          User Name
+                        </th>
+                        <th>
+                          Rate
+                        </th>
+                        <th>
+                          Comment
+                        </th>
+                        <th>
+                          Action
+                        </th>
+                      </thead>
+                      <tbody>
+                       @if ($product_review->isEmpty())
+                           <tr>
+                             <td>
+                               <p>Data is empty</p>
+                             </td>
+                           </tr>
+                       @else
+                        @foreach ($product_review as $review)
+                            
+                        <tr>
+                          <td>
+                          {{$loop->iteration}}
+                          </td>
+                          <td>
+                            {{$review->user->name}}
+                          </td>
+                          <td>
+                            {{$review->rate}}
+                          </td>
+                          <td>
+                            {{$review->content}}
+                          </td>
+                          <td class="td-actions text-left" >
+                            <a href="{{route('response.add_response',$review)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
+                                   <i class="material-icons">edit</i>
+                                </a>
+                          </td>
+                        </tr>
+                          @endforeach
+                       @endif
+                      </tbody>
+                    </table>
+                  </div>
+                  {{$product_review->links()}}
+                </div>
+              </div>
+            </div>
+            {{-- product review--}}
           </div>
 
 

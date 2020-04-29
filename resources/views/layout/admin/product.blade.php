@@ -86,7 +86,7 @@
                                   </button>
                                 </form>
                                 <a href="{{route('product.edit',$produk->id)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
-                                   <i class="material-icons">edit</i>
+                                   <i class="material-icons">assignment</i>
                                 </a>
                             
                               </td>
@@ -98,6 +98,7 @@
                   </div>
                   
                 </div>
+                {{$all_product->links()}}
               </div>
             </div>
             
