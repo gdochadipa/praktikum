@@ -15,7 +15,7 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title "> Product </h4>
-                <li class="d-none d-lg-block"> <a href="{{route('product.add')}}" class="btn header-btn">Add Product</a>
+                <li class="d-none d-lg-block"> <a href="{{route('product.add')}}" class="btn btn-primary header-btn">Add Product</a>
                     </li>
                 </div>
                 <div class="card-body">
@@ -75,9 +75,7 @@
                               {{$produk->weight}}
                             </td>
                             <td class="td-actions text-left">
-                                <a href="{{route('product.edit',$produk->id)}}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                   <i class="material-icons">edit</i>
-                                </a>
+                                
                                 <form style="display:inline-block;" action="{{route('product.destroy',['id'=>$produk->id])}}" method="post">
                                     @csrf
                                     @method('DELETE')

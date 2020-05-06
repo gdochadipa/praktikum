@@ -57,7 +57,7 @@ class AdminController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'));
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with("error", "Failed Login");;
     }
 
     public function logout()

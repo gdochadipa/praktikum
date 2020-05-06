@@ -7,7 +7,6 @@
 @endsection
 @section('content')
     <div class="content">
-      @include('components.notification')
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -15,21 +14,45 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">Transaction</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('admin.filter')}}" class="btn btn-primary header-btn"><i class="material-icons">assignment</i>Filter Transaction</a>
-                    </li>
+                   
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    
-                   @if ($transaction->isEmpty())
-                        <div class="row">
-                            <div class="col-md-12">
-                              <div class="alert alert-danger">
-							                  <div>Data kosong</div>
-					                  	</div>
+                    <form action="" method="POST" enctype="" class="form">
+                        @csrf
+                         <div class="row">
+                            {{-- <div class="col-md-4">
+                              <div class="form-group bmd-form-group">
+                                     <label >Find</label>
+                                    <input type="text" name="description" value=""  class="form-control" > 
+                                </div>
+                              
+                            </div> --}}
+                            <div class="col-md-4">
+                             <div class="form-group bmd-form-group">
+                                 <label >Status</label>
+                                <select  class="form-control" name="product_category" data-style=" btn btn-link">
+                                   <option selected disabled>-- Status --</option>
+                                </select>
+                              </div>
                             </div>
-                        </div>
-                  @else
+                            <div class="col-md-4">
+                             <div class="form-group bmd-form-group">
+                                 <label >Urutan</label>
+                                <select  class="form-control" name="product_category" data-style=" btn btn-link">
+                                   <option selected disabled>-- Urutan --</option>
+                                   <option>Terbaru</option>
+                                   <option>Lama</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <input type="submit" name="submit" value="Find" class="btn btn-success pull-right">
+                            </div>
+                         </div>
+                          
+                    </form>
+                  </div> 
                     <table class="table">
                       <thead class=" text-info">
                         <th>
@@ -89,7 +112,7 @@
                           <td>{{$item->proof_of_payment}}</td>
                           <td>{{$item->status}}</td>
                           <td class="td-actions text-left">
-                          <a href="{{route('transaction.edit',$item)}}"  rel="tooltip" title="View Detail" class="btn btn-primary btn-link btn-sm">
+                            <a href=""  rel="tooltip" title="View Detail" class="btn btn-primary btn-link btn-sm">
                                    <i class="material-icons">assignment</i>
                                 </a>
                           </td>
@@ -100,7 +123,7 @@
                     </table>
                     
                   </div>
-                    @endif   
+                   
                 </div>
               </div>
             </div>

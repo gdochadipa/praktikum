@@ -84,12 +84,34 @@ Route::prefix('admin/response')->group(function () {
     Route::delete('/{id}', 'ResponseController@destroy')->name('response.destroy')->middleware('auth:admin');
 });
 
+Route::prefix('admin/discount')->group(function () {
+    Route::get('/', 'DiscountController@index')->name('admin.discount')->middleware('auth:admin');
+    Route::get('/add', 'DiscountController@create')->name('discount.add')->middleware('auth:admin');
+    Route::get('/{discount}/edit', 'DiscountController@edit')->name('discount.edit')->middleware('auth:admin');
+    Route::post('/store', 'DiscountController@store')->name('discount.store')->middleware('auth:admin');
+    Route::put('/{id}/update', 'DiscountController@update')->name('discount.update')->middleware('auth:admin');
+    Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy')->middleware('auth:admin');
+});
+
+Route::prefix('admin/user')->group(function () {
+    Route::get('/', 'UserController@index')->name('admin.users')->middleware('auth:admin');
+    Route::get('/{user}/show', 'UserController@show')->name('admin.users.show')->middleware('auth:admin');
+    Route::put('/{id}/status', 'UserController@status')->name('admin.users.status')->middleware('auth:admin');
+});
+
+Route::prefix('admin/transaction')->group(function () {
+    Route::get('/', 'TransactionController@index')->name('admin.transaction')->middleware('auth:admin');
+    Route::get('/filter', 'TransactionController@filter')->name('admin.filter')->middleware('auth:admin');
+    Route::get('/{transaction}/edit', 'TransactionController@edit_admin')->name('transaction.edit')->middleware('auth:admin');
+    Route::get('/{id}/update/{status}', 'TransactionController@update_admin')->name('transaction.update')->middleware('auth:admin');
+    Route::delete('/{id}', 'TransactioneController@destroy')->name('transaction.destroy')->middleware('auth:admin');
+});
+
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'AdminController@showLoginForm')->name('admin.loginForm')->middleware('guest:admin');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('auth:admin');
     
-    Route::get('/users', 'AdminController@users')->name('admin.users')->middleware('auth:admin');
-    Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
+    // Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
 
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));

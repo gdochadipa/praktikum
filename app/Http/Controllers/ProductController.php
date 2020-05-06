@@ -137,8 +137,10 @@ class ProductController extends Controller
         $product->product_rate= $request->product_rate;
         $product->stock= $request->stock;
         $product->weight= $request->weight;
-        $product->save();
-        return redirect()->intended(route('admin.product'));
+        if($product->save()){
+            return redirect()->intended(route('admin.product'))->with("success", "Successfully Update Product");
+        }
+        return redirect()->intended(route('admin.product'))->with("error", "Failed Update Product");
     }
 
     public function add_image(Request $request, $id)

@@ -1,8 +1,8 @@
 @extends('components.admin.app_dash')
 @section('title')
-    Transaction
+    Discount
 @endsection
-@section('nav-transaction')
+@section('nav-discount')
     active
 @endsection
 @section('content')
@@ -14,14 +14,14 @@
               <div class="card">
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
-                  <h4 class="card-title ">Transaction</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('admin.filter')}}" class="btn btn-primary header-btn"><i class="material-icons">assignment</i>Filter Transaction</a>
+                  <h4 class="card-title ">Discount</h4>
+                <li class="d-none d-lg-block"> <a href="{{route('discount.add')}}" class="btn btn-primary header-btn"><i class="material-icons">add</i>Add Discount</a>
                     </li>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     
-                   @if ($transaction->isEmpty())
+                   @if ($discount->isEmpty())
                         <div class="row">
                             <div class="col-md-12">
                               <div class="alert alert-danger">
@@ -36,37 +36,16 @@
                           ID
                         </th>
                         <th>
-                          Timeout
+                         Product
                         </th>
                         <th>
-                          Address
+                          Precentage
                         </th>
                         <th>
-                          Regency
+                          Start
                         </th>
                         <th>
-                          Province
-                        </th>
-                        <th>
-                          Total
-                        </th>
-                        <th>
-                          Shipping Cost
-                        </th>
-                        <th>
-                          Sub Total
-                        </th>
-                        <th>
-                          User Name
-                        </th>
-                        <th>
-                          Courier
-                        </th>
-                        <th>
-                          Proof of payment
-                        </th>
-                        <th>
-                          Status
+                          End
                         </th>
                         <th>
                           Action
@@ -74,27 +53,29 @@
                         
                       </thead>
                       <tbody>   
-                        @foreach ($transaction as $item)
+                        @foreach ($discount as $item)
                           <tr>
                           <td>{{$loop->iteration}}</td>
-                          <td>{{$item->timeout}}</td>
-                          <td>{{$item->address}}</td>
-                          <td>{{$item->regency}}</td>
-                          <td>{{$item->province}}</td>
-                          <td>{{$item->total}}</td>
-                          <td>{{$item->shipping_cost}}</td>
-                          <td>{{$item->sub_total}}</td>
-                          <td>{{$item->user_id}}</td>
-                          <td>{{$item->courier_id}}</td>
-                          <td>{{$item->proof_of_payment}}</td>
-                          <td>{{$item->status}}</td>
+                          <td>{{$item->product->product_name}}</td>
+                          <td>{{$item->percentage}}</td>
+                          <td>{{$item->start}}</td>
+                          <td>{{$item->end}}</td>
                           <td class="td-actions text-left">
-                          <a href="{{route('transaction.edit',$item)}}"  rel="tooltip" title="View Detail" class="btn btn-primary btn-link btn-sm">
+                                
+                                <form style="display:inline-block;" action="{{route('discount.destroy',['id'=>$item->id])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">delete</i>
+                                  </button>
+                                </form>
+                                <a href="{{route('discount.edit',$item->id)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
                                    <i class="material-icons">assignment</i>
                                 </a>
-                          </td>
+                            
+                              </td>
                           </tr>
-                          {{$transaction->links()}}
+                          {{$discount->links()}}
                         @endforeach
                       </tbody>
                     </table>

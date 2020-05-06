@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\transaction;
+use App\transaction_detail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -14,7 +16,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transaction = transaction::with('user','courier')->paginate(15);
+        return view('layout.admin.transaction',compact('transaction'));
+    }
+
+    public function filter()
+    {
+        $transaction = DB::table('transactions')->paginate(15);
+        return view('layout.admin.transaction.transaction_filter', compact('transaction'));
     }
 
     /**
@@ -55,9 +64,14 @@ class TransactionController extends Controller
      * @param  \App\transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(transaction $transaction)
-    {
-        //
+    public function edit_admin(transaction $transaction)
+    {   
+       
+        $transaction=transaction::where('id','=', $transaction->id)->with('user', 'courier')->get();
+        $transaction_d = transaction_detail::where('transaction_id','=', $transaction[0]->id)->with('product')->paginate(15);
+        
+        
+        return view('layout.admin.transaction.edit',compact('transaction', 'transaction_d'));
     }
 
     /**
@@ -70,6 +84,17 @@ class TransactionController extends Controller
     public function update(Request $request, transaction $transaction)
     {
         //
+    }
+
+    public function update_admin($id, $status){
+        $transaction= transaction::find($id);
+        $transaction->status = $status;
+        
+        if ($transaction->save()) {
+            return redirect()->back()->with("success", "Successfully Edit Status");
+        }
+        return redirect()->back()->with("error", "Error Edit Status");
+        
     }
 
     /**

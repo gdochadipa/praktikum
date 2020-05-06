@@ -60,6 +60,11 @@ class ResponseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'content' => ['required'],
+        ]);
+
+
         $response = new response();
         $response->review_id = $request->review_id;
         $response->admin_id = $request->admin_id;
@@ -106,6 +111,10 @@ class ResponseController extends Controller
      */
     public function update(Request $request, response $response, $id)
     {
+        $request->validate([
+            'content' => ['required'],
+        ]);
+
         $response=new response();
         $response=response::find($id);
         $response->review_id = $request->review_id;

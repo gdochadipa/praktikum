@@ -10,6 +10,11 @@ class product extends Model
     {
         return $this->hasMany('App\product_review');
     }
+
+    public function discount()
+    {
+        return $this->hasMany('App\discount');
+    }
     
     public function transaction_detail()
     {

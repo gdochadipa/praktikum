@@ -40,15 +40,16 @@ class CourierController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'courier' => ['required']
+            'courier' => ['required','max:30']
         ]);
 
         $courier = new Courier;
         $courier->courier = $request->courier;
-        $courier->save();
         
-
-        return redirect()->intended(route('admin.courier'));
+        if($courier->save()){
+            return redirect()->intended(route('admin.courier'))->with("success", "Successfully Add Courier");
+        }
+        return redirect()->intended(route('admin.courier'))->with("success", "Error Add Courier");
     }
 
     /**
@@ -82,13 +83,20 @@ class CourierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
+
+        $request->validate([
+            'courier' => ['required','max:30']
+        ]);
+
         $courier = new Courier();
         $courier = Courier::find($id);
 
         $courier->courier = $request->courier;
-        $courier->save();
-        return redirect()->intended(route('admin.courier'));
+        if ($courier->save()) {
+            return redirect()->intended(route('admin.courier'))->with("success", "Successfully Edit Courier");
+        }
+        return redirect()->intended(route('admin.courier'))->with("success", "Error Edit Courier");
     }
 
     /**

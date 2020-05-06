@@ -8,6 +8,7 @@
 @section('content')
      
  <div class="content">
+   @include('components.notification')
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">

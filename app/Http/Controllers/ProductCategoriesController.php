@@ -35,12 +35,17 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate([
+            'category_name' => ['required','max:30']
+        ]);
         $category = new product_categories;
         $category->category_name= $request->category_name;
-        $category->save();
+        
     
-        return redirect()->intended(route('admin.category'));
+        if ($category->save()) {
+            return redirect()->intended(route('admin.category'))->with("success", "Successfully Add Category");
+        }
+        return redirect()->intended(route('admin.category'))->with("error", "Error Add Category");
     }
 
     /**
@@ -74,13 +79,19 @@ class ProductCategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
+        $request->validate([
+            'category_name' => ['required', 'max:30']
+        ]);
         $category = new product_categories();
         $category = product_categories::find($id);
 
         $category->category_name= $request->category_name;
-        $category->save();
-        return redirect()->intended(route('admin.category'));
+        
+        if ($category->save()) {
+            return redirect()->intended(route('admin.category'))->with("success", "Successfully Edit Category");
+        }
+        return redirect()->intended(route('admin.category'))->with("error", "Error Edit Category");
     }
 
     /**
