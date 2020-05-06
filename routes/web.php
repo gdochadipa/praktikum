@@ -93,10 +93,10 @@ Route::prefix('admin/discount')->group(function () {
     Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy')->middleware('auth:admin');
 });
 
-Route::prefix('admin/user')->group(function () {
-    Route::get('/', 'UserController@index')->name('admin.users')->middleware('auth:admin');
-    Route::get('/{user}/show', 'UserController@show')->name('admin.users.show')->middleware('auth:admin');
-    Route::put('/{id}/status', 'UserController@status')->name('admin.users.status')->middleware('auth:admin');
+Route::prefix('admin/users')->group(function () {
+    Route::get('/', 'AdminController@user')->name('admin.users')->middleware('auth:admin');
+    Route::get('/{user}/show', 'AdminController@show')->name('admin.users.show')->middleware('auth:admin');
+    Route::put('/{id}/status', 'AdminController@status')->name('admin.users.status')->middleware('auth:admin');
 });
 
 Route::prefix('admin/transaction')->group(function () {

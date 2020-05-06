@@ -45,7 +45,7 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'profile_image'=> 'ada',
+            'profile_image'=> 'user.png',
             'password' => Hash::make($request->password),
             'status' => 0
         ]);
@@ -60,15 +60,17 @@ class UserController extends Controller
        if(Mail::to($request->email)->send(new UserRegisterMail($user[0], $request->name))){
             return view('auth.user_email_confirmed');
        }
-        
 
+       if($user){
+            return view('auth.user_email_confirmed');
+       }
         return redirect()->back()->withInput($request->only('name','email'))->with('error', 'Please fill in all fields with valid value');
     }
 
     public function verify($token)
     {
         $email = Crypt::decryptString($token);
-        $user = user::where('email','=',$email)->update(['email_verified_at' => Carbon::now()->toDateTimeString()]);
+        $user = user::where('email','=',$email)->update(['email_verified_at' => Carbon::now()->toDateTimeString(),'status'=>'1']);
         if($user){
 
             return redirect()->route('user.login');
@@ -82,12 +84,17 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required']
         ]);
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->intended(route('dashboard'));
+            $user = \Auth::user();
+            if($user->status==1){
+                return redirect()->intended(route('dashboard'));
+            }else{
+                return redirect()->intended(route('logout'))->with('success', 'Anda belum melakukan verifikasi');
+            }
+            
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'));
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with('error','Username or Password is false');
     }
 
     public function logout()

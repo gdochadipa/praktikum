@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\product_categories as product_categories;
 use App\transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ProductCategoriesController extends Controller
@@ -100,9 +101,15 @@ class ProductCategoriesController extends Controller
      * @param  \App\courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product $product)
+    public function destroy($id)
     {
-        $product->delete();
-        return redirect()->intended(route('admin.product'));
+        $cat = product_categories::find($id);
+        $product_cat_det = DB::table('product_category_details')->where('product_id','=',$cat->id)->get();
+        if($product_cat_det->isEmpty()){
+            DB::delete('delete from product_category_details where product_id = ?', [$cat->id]);
+        }
+        $cat->delete();
+
+        return redirect()->intended(route('admin.category'))->with("success", "Successfully Delete Category");
     }
 }

@@ -96,7 +96,7 @@ class CourierController extends Controller
         if ($courier->save()) {
             return redirect()->intended(route('admin.courier'))->with("success", "Successfully Edit Courier");
         }
-        return redirect()->intended(route('admin.courier'))->with("success", "Error Edit Courier");
+        return redirect()->intended(route('admin.courier'))->with("error", "Error Edit Courier");
     }
 
     /**
@@ -105,9 +105,10 @@ class CourierController extends Controller
      * @param  \App\courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(courier $courier)
-    {
+    public function destroy($id)
+    {   
+        $courier = Courier::find($id);
         $courier->delete();
-        return redirect()->intended(route('admin.courier'));
+        return redirect()->intended(route('admin.courier'))->with("success", "Successfully Delete Courier");
     }
 }

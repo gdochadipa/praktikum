@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\courier;
+use App\user;
 use App\transaction;
 use Illuminate\Http\Request;
 use App\admin as Admin;
@@ -20,30 +21,7 @@ class AdminController extends Controller
            return view('layout.admin.homeAdmin');
     }
 
-    public function product()
-    {
-       //
-    }
-
-    public function users()
-    {
-        return view('layout.admin.user');
-    }
-
-    public function transaction()
-    {
-        return view('layout.admin.transaction');
-    }
-
-    public function product_categories()
-    {
-       //
-    }
-
-    public function courier()
-    {
-        //
-    }
+ 
 
 
     public function loginAdmin(Request $request)
@@ -57,12 +35,37 @@ class AdminController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'))->with("error", "Failed Login");;
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with("error", "Failed Login");
     }
 
     public function logout()
     {
         Auth::logout();
         return redirect()->route('admin.loginForm');
+    }
+
+    public function user()
+    {
+        $user = user::paginate(25);
+        return view('layout.admin.user',compact('user'));
+    }
+
+    public function show(user $user)
+    {
+        return view('layout.admin.user.show', compact('user'));
+    }
+
+    public function status($id)
+    {
+        $user=user::find($id);
+        if($user->status == 1){
+            $user->status = '0'; 
+        }else{
+            $user->status = '1'; 
+        }
+        if($user->save()){
+            return redirect()->intended(route('admin.users'))->with("successful", "success Change Status");
+        }
+        return redirect()->intended(route('admin.users'))->with("error", "Failed Change Status");
     }
 }

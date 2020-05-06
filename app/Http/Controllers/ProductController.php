@@ -68,7 +68,7 @@ class ProductController extends Controller
 
             $product = DB::table('products')->where('product_name','=', $request->product_name)->first();
             foreach($request->file('product_images') as $file){
-                $name = time() . '_.' . $file->extension();
+                $name = rand(1000,9999) . '_.' . $file->extension();
                 $file->move("product_images/", $name);
                 $image = new product_images();
                 $image->product_id= $product->id;
