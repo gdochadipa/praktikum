@@ -44,7 +44,7 @@
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="" class="simple-text logo-normal">
           Admin
         </a>
       </div>
@@ -225,6 +225,8 @@
   <script src={{asset('admin/assets/js/material-dashboard.js?v=2.1.1')}} type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src={{asset('admin/assets/demo/demo.js')}}></script>
+
+   
   <script>
     $(document).ready(function() {
       $().ready(function() {

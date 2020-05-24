@@ -21,7 +21,8 @@
             <link rel="stylesheet" href="{{asset('assets/css/slick.css')}}">
             <link rel="stylesheet" href="{{asset('assets/css/nice-select.css')}}">
             <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-            <style>
+            <script src={{asset('admin/assets/js/core/jquery.min.js')}}></script>
+              <style>
                 .header-bottom .header-right .shopping-card::before{
                     content: "1";
                 }
@@ -66,42 +67,42 @@
                                     <nav>                                                
                                         <ul id="navigation">                                                                                                                                     
                                             <li><a href="">Home</a></li>
-                                            <li><a href="">Catagori</a></li>
-                                            <li class="hot"><a href="#">Latest</a>
-                                                <ul class="submenu">
-                                                    <li><a href="product_list.html"> Product list</a></li>
-                                                    <li><a href="single-product.html"> Product Details</a></li>
-                                                </ul>
-                                            </li>
-                                           
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="">Categori</a></li>
+                                            <li><a href="">History</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div> 
                             <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
                                 <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
-                                    <li class="d-none d-xl-block">
+                                    {{-- <li class="d-none d-xl-block">
                                         <div class="form-box f-right ">
                                             <input type="text" name="Search" placeholder="Search products">
                                             <div class="search-icon">
                                                 <i class="fas fa-search special-tag"></i>
                                             </div>
                                         </div>
-                                     </li>
-                                    <li class=" d-none d-xl-block">
+                                     </li> --}}
+                                    
+                                    <li>
                                         <div class="favorit-items">
-                                            <i class="far fa-heart"></i>
+                                            <a href="cart.html"><i class="fas fa-shopping-basket"></i></a>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="shopping-card">
-                                            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        <a href="{{route('user.carts')}}"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
                                     </li>
+                                    
                                    <li>
-                                        <div class="user">
-                                            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        <div class="user"> 
+                                            <a href="cart.html"><img style="width:50px; height:50px;" class="image_user" src="assets/img/categori/product1.png" alt=""></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                    <div class="user">
+                                            <a href="cart.html"><i class="fas fa-power-off"></i></a>
                                         </div>
                                     </li>
                                 </ul>
@@ -208,8 +209,9 @@
    </footer>
    
 	<!-- JS here -->
-	
-		<!-- All JS Custom Plugins Link Here here -->
+        
+        <!-- All JS Custom Plugins Link Here here -->
+         
         <script src="{{asset('assets/js/vendor/modernizr-3.5.0.min.js')}}"></script>
 		<!-- Jquery, Popper, Bootstrap -->
 		<script src="{{asset('assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
@@ -242,6 +244,6 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="{{asset('assets/js/plugins.js')}}"></script>
         <script src="{{asset('assets/js/main.js')}}"></script>
-        
+        @yield('js')
     </body>
 </html>

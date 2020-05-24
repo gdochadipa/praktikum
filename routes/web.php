@@ -15,6 +15,34 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'HomeController@dashboard')->name('dashboard');
+Route::get('/province', 'HomeController@getProvince')->name('province');
+Route::get('/city', 'HomeController@getCity')->name('city');
+
+Route::prefix('product')->group(function () {
+    Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
+
+});
+ 
+Route::prefix('carts')->group(function () {
+    Route::get('/', 'CartsController@index')->name('user.carts');
+    Route::post('/update', 'CartsController@update_carts')->name('user.carts.update');
+    Route::post('/store', 'CartsController@store')->name('user.carts.store');
+    Route::delete('/{id}', 'CartsController@delete')->name('user.carts.delete');
+});
+
+Route::prefix('/user/transaction')->group(function () {
+    Route::get('/confirm/{id}', 'TransactionController@showConfirmation')->name('user.transaction.showConfirmation');
+    Route::get('/check', 'TransactionController@check')->name('user.transaction.check');
+    Route::post('/courier', 'TransactionController@courierPilih')->name('user.transaction.courierPilih');
+    Route::post('/purchase', 'TransactionController@purchase')->name('user.transaction.purchase');
+    Route::post('/proof/{id}', 'TransactionController@proof')->name('user.transaction.proof');
+});
+
+Route::prefix('transaction')->group(function () {
+    Route::get('/', 'TransactionController@index')->name('user.transaction');
+    Route::post('/add', 'TransactionController@add')->name('user.transaction.add');
+   
+});
 
 Route::get('/login','UserController@login')->name('user.login')->middleware('guest');
 Route::get('/register','UserController@regis')->name('user.regis')->middleware('guest');
