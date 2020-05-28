@@ -20,7 +20,7 @@ Route::get('/city', 'HomeController@getCity')->name('city');
 
 Route::prefix('product')->group(function () {
     Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
-
+    Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
 });
  
 Route::prefix('carts')->group(function () {
@@ -31,11 +31,13 @@ Route::prefix('carts')->group(function () {
 });
 
 Route::prefix('/user/transaction')->group(function () {
+    Route::get('/history', 'TransactionController@history')->name('user.transaction.history');
     Route::get('/confirm/{id}', 'TransactionController@showConfirmation')->name('user.transaction.showConfirmation');
     Route::get('/check', 'TransactionController@check')->name('user.transaction.check');
     Route::post('/courier', 'TransactionController@courierPilih')->name('user.transaction.courierPilih');
     Route::post('/purchase', 'TransactionController@purchase')->name('user.transaction.purchase');
     Route::post('/proof/{id}', 'TransactionController@proof')->name('user.transaction.proof');
+
 });
 
 Route::prefix('transaction')->group(function () {

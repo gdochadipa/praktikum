@@ -104,7 +104,7 @@ class DiscountController extends Controller
         $discount->end = $request->end;
 
         if ($discount->save()) {
-            return redirect()->intended(route('admin.discount'))->with("success", "Successfully Update Discount");
+            return redirect()->intended(route('admin.product'))->with("success", "Successfully Update Discount");
         }
         return redirect()->back()->withInput($request->only('percentage', 'start', 'end'))->with("error", "Failed Update Discount");
     }
@@ -118,6 +118,6 @@ class DiscountController extends Controller
     public function destroy(discount $discount)
     {
         $discount->delete();
-        return redirect()->intended(route('admin.discount'))->with("success", "Successfully Delete Discount");
+        return redirect()->back()->with("success", "Successfully Delete Discount");
     }
 }

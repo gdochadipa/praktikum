@@ -59,7 +59,7 @@
                                       <h4><a href="{{route('detail_product',['id'=>$item->id])}}">{{$item->product_name}}</a></h4>
                                         <div class="price">
                                             <ul>
-                                                <li>Rp. {{$item->price}}</li>
+                                                <li>Rp. {{number_format($item->price)}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                             </div>
                             
                             @endforeach
-                           
+                           {{$product->links()}}
                         </div>
                     </div>
 

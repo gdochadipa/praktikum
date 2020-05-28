@@ -9,6 +9,7 @@ use App\product_review;
 use App\response;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,11 +26,38 @@ class HomeController extends Controller
 
     function detail_product($id)
     {
+        
         $product = product::find($id);
         $product_images = product_images::where('product_id','=',$product->id)->get();
         $product_reviews = product_review::where('product_id', '=', $product->id)->with('user')->paginate(5);
         $user = Auth::user();
-        return view('layout.user.product.detail_product',compact('product', 'product_images', 'product_reviews','user'));
+        $user_review = product_review::where('product_id', '=', $product->id)->where('user_id', '=', $user->id)->with('user')->first();
+        return view('layout.user.product.detail_product',compact('product', 'product_images', 'product_reviews','user','user_review'));
+    }
+
+    public function review_product($id, Request $request)
+    {
+        $request->validate([
+            'rate' => ['required'],
+            'content' => ['required', 'max:100']
+        ]);
+
+        $user = Auth::user();
+        $review = new product_review();
+        $review->product_id = $id;
+        $review->user_id = $user->id;
+        $review->rate = $request->rate;
+        $review->content = $request->content;
+        if($review->save()){
+            $product = product::find($id);
+            $avg_rate = DB::select('SELECT AVG(rate) as avg_rate FROM product_reviews WHERE product_id=?', [$id]);
+            $avg_rate = json_decode(json_encode($avg_rate), true);
+            $product->product_rate = (int)round($avg_rate[0]["avg_rate"]);
+            $product->save();
+
+            return redirect()->back()->with("Success", "Successfully Comment");
+        }
+        return redirect()->back()->with("error", "Failed Comment");
     }
 
     public function getProvince()

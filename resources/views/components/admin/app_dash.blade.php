@@ -68,12 +68,6 @@
               <p>Transaction</p>
             </a>
           </li>
-          <li class="nav-item @yield('nav-discount')">
-            <a class="nav-link" href="{{route('admin.discount')}}">
-              <i class="material-icons">shopping_chart</i>
-              <p>Discount</p>
-            </a>
-          </li>
          
         </ul>
       </div>

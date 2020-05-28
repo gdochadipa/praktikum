@@ -36,7 +36,7 @@
                         <input class="product_count_item input-number" name="qty" type="text" value="1" min="0" max="10">
                         <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
                     </div>
-                <p>Rp. {{$product->price}}</p>
+                <p>Rp. {{number_format($product->price)}}</p>
                 </div>
               <div class="add_to_cart">
                   <input type="submit" value="add to cart" class="btn_3"/>
@@ -52,41 +52,44 @@
             <div class="section-top-border">
         <h3 class="mb-30">Review</h3>
         <div class="row">
-					<div class="col-lg-12 col-md-12">
-						<form action="" method="">
-              @csrf
-              <input type="text" name="user_id" value="{{$user->id}}" hidden />
-              <input type="text" name="product_id"  value="{{$product->id}}" hidden />
-              <div class="input-group-icon mt-10">
-								<div class="icon"><i class="fa fa-star" aria-hidden="true"></i></div>
-								<div class="form-select" id="default-select">
-								<select name="rate">
-												<option disabled selected>Rating</option>
-									<option value="1">★</option>
-									<option value="2">★★</option>
-									<option value="3">★★★</option>
-                  <option value="4">★★★★</option>
-                  <option value="5">★★★★★</option>
-									</select>
-								</div>
-              </div>
-              <div class="mt-20">
-								<input type="text" name="content" placeholder="Content"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Content'" required
-									class="single-input">
-              </div>
-              <div class="button-group-area mt-10">
-                <input type="submit" class="genric-btn success radius" value="Submit" />
-              </div>  
-            </form>
+          @if ($user_review==null)
+            <div class="col-lg-12 col-md-12">
+						  <form action="{{route('review_product',['id'=>$product->id])}}" method="POST">
+                @csrf
+                <input type="text" name="user_id" value="{{$user->id}}" hidden />
+                <input type="text" name="product_id"  value="{{$product->id}}" hidden />
+                <div class="input-group-icon mt-10">
+                  <div class="icon"><i class="fa fa-star" aria-hidden="true"></i></div>
+                  <div class="form-select" id="default-select">
+                  <select name="rate">
+                          <option disabled selected>Rating</option>
+                    <option value="1">★</option>
+                    <option value="2">★★</option>
+                    <option value="3">★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="5">★★★★★</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mt-20">
+                  <input type="text" name="content" placeholder="Content"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Content'" required
+                    class="single-input">
+                </div>
+                <div class="button-group-area mt-10">
+                  <input type="submit" class="genric-btn success radius" value="Submit" />
+                </div>  
+              </form>
           </div>
+          @endif
+					
         </div>
         <br>
         <br>
         	@foreach ($product_reviews as $item)
          <div class="row">
 					<div class="col-md-3">
-          <img src="{{asset('image_user/'.$item->user->profile_image)}}" style="width: 200px; height:200px" alt="" class="img-fluid">
+          <img src="{{asset('image_user/'.$item->user->profile_image)}}" style="width: 200px; height:200px; padding:15px;" alt="" class="img-fluid">
 					</div>
 					<div class="col-md-9 mt-sm-20">
             <h4 style="">{{$item->user->name}}</h4>
@@ -98,6 +101,23 @@
             <p>{{$item->content}}</p>
 					</div>
         </div>
+          @php
+              $responses = DB::table('responses')->where('review_id','=',$item->id)->get();
+              
+          @endphp        
+          @if (!$responses->isEmpty())
+               @foreach ($responses as $respon)
+               <br>
+              <h5 class="mb-30">Response Admin</h5>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <blockquote class="generic-blockquote">
+                      {{$respon->content}}
+                    </blockquote>
+                  </div>
+                </div>
+                @endforeach
+          @endif
         @endforeach
         
         

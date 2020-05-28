@@ -7,6 +7,7 @@ use App\product_review;
 use App\product_categories;
 use App\product_category_details;
 use App\product_images;
+use App\discount;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -107,7 +108,8 @@ class ProductController extends Controller
         $product_categories= DB::table('product_categories')->get();
         $product_category_details = product_category_details::where('product_id', '=', $id)->with('product_categories')->paginate(10);
         $product_review = product_review::where('product_id', '=', $id)->paginate(10);
-        return view('layout.admin.product.edit', compact('product','image', 'product_categories', 'product_category_details', 'product_review'));
+        $discount = discount::where('id_product', '=', $id)->paginate(10);
+        return view('layout.admin.product.edit', compact('product','image', 'product_categories', 'product_category_details', 'product_review', 'discount'));
     }
 
     /**

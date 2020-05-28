@@ -13,6 +13,7 @@
             <span>Thank you. Your order has been received.</span>
           </div>
         </div>
+        
         <div class="col-lg-6 col-lx-4">
           <div class="single_confirmation_details">
             <h4>order info</h4>
@@ -21,10 +22,10 @@
                 <p>order number</p><span>: {{$transaction->id}}</span>
               </li>
               <li>
-              <p>Payment Until</p><span>: {{$transaction->timeout}}</span>
+              <p>Payment Time</p><span>: {{$time}}</span>
               </li>
               <li>
-                <p>total</p><span>: Rp. {{number_format($transaction->sub_total)}}</span>
+                <p>total</p><span>: Rp. {{number_format($transaction->total)}}</span>
               </li>
               <li>
                 <p>Status Payment</p><span>: {{$transaction->status}}</span>

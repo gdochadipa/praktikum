@@ -16,7 +16,7 @@
                         <form action="{{route('user.transaction.courierPilih')}}" method="POST">
                             @csrf
                             <div class="mt-10">
-                            <input type="text" name="address" placeholder="Address"
+                            <input type="text" name="address" placeholder="Address" required
                                     class="single-input">
                             </div>
                             <div class="input-group-icon mt-10">

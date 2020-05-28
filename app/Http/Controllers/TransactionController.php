@@ -20,6 +20,22 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function update_transaction()
+    {
+        $user  =  Auth::user();
+        $today = Carbon::now();
+        $transaction = transaction::all();
+        foreach ($transaction as $index) {
+            $expired = Carbon::parse($index->timeout);
+            if ($today->lte($expired) && $index->proof_of_payment==null) {
+                
+                $index->status = 'expired';
+                $index->save();
+            }
+        }
+        
+    }
+
     public function index()
     {
         $transaction = transaction::with('user','courier')->paginate(15);
@@ -30,6 +46,14 @@ class TransactionController extends Controller
     {
         $transaction = DB::table('transactions')->paginate(15);
         return view('layout.admin.transaction.transaction_filter', compact('transaction'));
+    }
+
+    public function history()
+    {   
+        $this->update_transaction();
+        $user =  Auth::user();
+        $transaction = transaction::where('user_id','=',$user->id)->orderBy('id','DESC')->with('courier')->paginate(10);
+        return view('layout.user.transaction.history',compact('transaction'));
     }
 
     public function getProvince($id)
@@ -151,6 +175,7 @@ class TransactionController extends Controller
         $transaction->sub_total = 0;
         $transaction->status = 'unverified';
         $total = 0;
+        $subtotal = 0;
         if($transaction->save()){
             $getTrans = transaction::where('user_id','=', $user->id)->where('status','=', 'unverified')
             ->orderBy('id','desc')->first();
@@ -172,12 +197,11 @@ class TransactionController extends Controller
                 $transaction_det->save();
                 $disc_price = $cart->product->price - $diskon;
                 $price = $disc_price * $cart->qty;
-
                 $subtotal += $price;
                 $cart->status = 'checkedout';
                 $cart->save();
              }
-             $getTrans->sub_total = $total;
+             $getTrans->sub_total = $subtotal;
              $total = $subtotal + $request->cost;
              $getTrans->total = $total;
              $getTrans->save();
@@ -190,7 +214,11 @@ class TransactionController extends Controller
     {
         $transaction = transaction::where('id', '=', $id)->with('courier')->first();
         $det_transaction = transaction_detail::where('transaction_id','=',$id)->with('product')->get();
-        return view('layout.user.transaction.showConfirmation',compact('transaction', 'det_transaction'));
+        $startTime = Carbon::now();
+        $finishTime = Carbon::parse($transaction->timeout);
+        $totalDuration = $finishTime->diffInSeconds($startTime);
+        $time = gmdate('H : i : s', $totalDuration);
+        return view('layout.user.transaction.showConfirmation',compact('transaction', 'det_transaction','time'));
     }
 
     public function proof($id,Request $request)
@@ -200,6 +228,7 @@ class TransactionController extends Controller
         $name = time() . '_.' . $proof->extension();
         $proof->move("proof_of_payment/", $name);
         $transaction->proof_of_payment = $name;
+
         $transaction->save();
         return redirect()->back();
     }

@@ -66,9 +66,9 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>                                                
                                         <ul id="navigation">                                                                                                                                     
-                                            <li><a href="">Home</a></li>
-                                            <li><a href="">Categori</a></li>
-                                            <li><a href="">History</a></li>
+                                            <li><a href="{{route('dashboard')}}">Home</a></li>
+                                            <li><a href="{{route('dashboard')}}">Categori</a></li>
+                                            <li><a href="{{route('user.transaction.history')}}">History</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -94,15 +94,17 @@
                                         <a href="{{route('user.carts')}}"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
                                     </li>
-                                    
+                                    @php
+                                        $user = Auth::user();
+                                    @endphp
                                    <li>
                                         <div class="user"> 
-                                            <a href="cart.html"><img style="width:50px; height:50px;" class="image_user" src="assets/img/categori/product1.png" alt=""></a>
+                                            <a href="cart.html"><img style="width:50px; height:50px;" class="image_user" src="{{asset('image_user/'.$user->profile_image)}}" alt=""></a>
                                         </div>
                                     </li>
                                     <li>
                                     <div class="user">
-                                            <a href="cart.html"><i class="fas fa-power-off"></i></a>
+                                            <a href="{{route('logout')}}"><i class="fas fa-power-off"></i></a>
                                         </div>
                                     </li>
                                 </ul>
