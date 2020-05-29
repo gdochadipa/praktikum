@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\transaction;
 use Carbon\Carbon;
 use App\carts;
+use App\admin;
+use App\Notifications\admin_notification;
 use App\discount;
 use App\transaction_detail;
 use Illuminate\Support\Facades\DB;
@@ -176,6 +178,9 @@ class TransactionController extends Controller
         $transaction->status = 'unverified';
         $total = 0;
         $subtotal = 0;
+
+        
+
         if($transaction->save()){
             $getTrans = transaction::where('user_id','=', $user->id)->where('status','=', 'unverified')
             ->orderBy('id','desc')->first();
@@ -184,6 +189,7 @@ class TransactionController extends Controller
                 $transaction_det->transaction_id = $getTrans->id;
                 $transaction_det->product_id = $cart->product_id;
                 $transaction_det->qty = $cart->qty;
+                
                 
                 $discount = DB::table('discounts')->where('start', '<=', $todayD)
                     ->where('end', '>=', $todayD)->where('id_product', '=', $cart->product->id)->get();
@@ -200,6 +206,14 @@ class TransactionController extends Controller
                 $subtotal += $price;
                 $cart->status = 'checkedout';
                 $cart->save();
+
+                $admin = admin::find(2);
+                $details = [
+                        'order' => 'Transaction',
+                        'body' => 'User has Buy our Product!',
+                        'link' => url(route('transaction.edit', ['transaction' => $getTrans])),
+                    ];
+                $admin->notify(new admin_notification($details));
              }
              $getTrans->sub_total = $subtotal;
              $total = $subtotal + $request->cost;
@@ -229,6 +243,14 @@ class TransactionController extends Controller
         $proof->move("proof_of_payment/", $name);
         $transaction->proof_of_payment = $name;
 
+        $admin = admin::find(2);
+        $details = [
+            'order' => 'Transaction',
+            'body' => 'User has Buy our Product!',
+            'link' => url(route('transaction.edit', ['transaction' => $transaction])),
+        ];
+        $admin->notify(new admin_notification($details));
+        
         $transaction->save();
         return redirect()->back();
     }

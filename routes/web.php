@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@dashboard')->name('dashboard');
 Route::get('/province', 'HomeController@getProvince')->name('province');
 Route::get('/city', 'HomeController@getCity')->name('city');
+Route::get('/notify', 'HomeController@notify')->name('notify');
 
 Route::prefix('product')->group(function () {
     Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
@@ -45,6 +46,7 @@ Route::prefix('transaction')->group(function () {
     Route::post('/add', 'TransactionController@add')->name('user.transaction.add');
    
 });
+
 
 Route::get('/login','UserController@login')->name('user.login')->middleware('guest');
 Route::get('/register','UserController@regis')->name('user.regis')->middleware('guest');
@@ -140,9 +142,9 @@ Route::prefix('admin/transaction')->group(function () {
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'AdminController@showLoginForm')->name('admin.loginForm')->middleware('guest:admin');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('auth:admin');
-    
+    Route::get('/notify', 'AdminController@notify')->name('admin.notify')->middleware('auth:admin');
     // Route::get('/transaction', 'AdminController@transaction')->name('admin.transaction')->middleware('auth:admin');
-
+    Route::get('/notifyAll', 'AdminController@notifyAll')->name('admin.notifyAll')->middleware('auth:admin');
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));
     });*/

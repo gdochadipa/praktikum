@@ -24,14 +24,14 @@
             <script src={{asset('admin/assets/js/core/jquery.min.js')}}></script>
               <style>
                 .header-bottom .header-right .shopping-card::before{
-                    content: "1";
+                    content: "{{{auth()->user()->unreadNotifications->count()}}}";
                 }
                 .header-bottom .header-right .favorit-items::before{
-                    content: "1";
+                    content: "";
                 }
             </style>
    </head>
-
+   
    <body>
        
     <!-- Preloader Start -->

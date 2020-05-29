@@ -52,6 +52,7 @@
             <div class="section-top-border">
         <h3 class="mb-30">Review</h3>
         <div class="row">
+          
           @if ($user_review==null)
             <div class="col-lg-12 col-md-12">
 						  <form action="{{route('review_product',['id'=>$product->id])}}" method="POST">

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\admin_notification;
 use Illuminate\Http\Request;
+use App\admin;
 use App\product;
 use App\product_images;
 use App\product_review;
@@ -22,6 +24,18 @@ class HomeController extends Controller
     {
         $product = product::paginate(9);
         return view('layout.user.index',compact('product'));
+    }
+
+    public function notify()
+    {
+        $admin = admin::find(2);
+        $details = [
+            'order' => 'Review',
+            'body' => 'User has review our Product!',
+            'link' => url(route('')),
+        ];
+        $admin->notify(new admin_notification($details));
+        return ('done');
     }
 
     function detail_product($id)
@@ -54,6 +68,14 @@ class HomeController extends Controller
             $avg_rate = json_decode(json_encode($avg_rate), true);
             $product->product_rate = (int)round($avg_rate[0]["avg_rate"]);
             $product->save();
+
+            $admin = admin::find(2);
+            $details = [
+                'order' => 'Review',
+                'body' => 'User has review our Product!',
+                'link' => url(route('product.edit',['id'=> $id])),
+            ];
+            $admin->notify(new admin_notification($details));
 
             return redirect()->back()->with("Success", "Successfully Comment");
         }

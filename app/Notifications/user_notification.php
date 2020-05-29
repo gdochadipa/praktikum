@@ -7,11 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class admin_notification extends Notification
+class user_notification extends Notification
 {
     use Queueable;
     public $post;
-
+    
 
     /**
      * Create a new notification instance.
@@ -31,7 +31,7 @@ class admin_notification extends Notification
      */
     public function via($notifiable)
     {
-        return [ 'database'];
+        return ['mail','database'];
     }
 
     /**

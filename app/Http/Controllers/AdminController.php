@@ -6,6 +6,7 @@ use App\user;
 use App\transaction;
 use Illuminate\Http\Request;
 use App\admin as Admin;
+use App\Notifications\admin_notification;
 use Auth as Auth;
 
 
@@ -21,6 +22,10 @@ class AdminController extends Controller
            return view('layout.admin.homeAdmin');
     }
 
+    public function notifyAll()
+    {
+        return view('layout.admin.notifyAll');
+    }
  
 
 
@@ -67,5 +72,18 @@ class AdminController extends Controller
             return redirect()->intended(route('admin.users'))->with("successful", "success Change Status");
         }
         return redirect()->intended(route('admin.users'))->with("error", "Failed Change Status");
+    }
+
+    public function notify()
+    {
+        $admin = Admin::find(2);
+        $details = [
+            'greeting' => 'Hi Artisan',
+            'body' => 'This is our example notification tutorial',
+            'thanks' => 'Thank you for visiting codechief.org!',
+        ];
+        
+        $admin->notify(new admin_notification($details));
+        return dd('done');
     }
 }
