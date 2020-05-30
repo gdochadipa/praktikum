@@ -15,28 +15,33 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">Notification</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('discount.add')}}" class="btn btn-primary header-btn"><i class="material-icons">add</i>Add Discount</a>
+                <li class="d-none d-lg-block"> <a href="{{route('discount.add')}}" class="btn btn-primary header-btn"><i class="material-icons">visibility</i> Mark All as Read</a>
                     </li>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    
+                    @if (auth()->user()->notifications->isEmpty())
+                        <div class="row">
+                            <div class="col-md-12">
+                              <div class="alert alert-danger">
+							                  <div>Data kosong</div>
+					                  	</div>
+                            </div>
+                        </div>
+                    @else
                     <table class="table">
                       <thead class=" text-info">
                         <th>
                           ID
                         </th>
                         <th>
-                         Product
+                         Order
                         </th>
                         <th>
-                          Precentage
+                          Message
                         </th>
                         <th>
-                          Start
-                        </th>
-                        <th>
-                          End
+                          Date
                         </th>
                         <th>
                           Action
@@ -45,39 +50,37 @@
                       </thead>
                       <tbody>   
                           
-                        @foreach (auth()->user()->unreadNotifications as $item)
+                        @foreach (auth()->user()->notifications as $item)
                           <tr>
                           <td>{{$loop->iteration}}</td>
+                          <td>{{$item->data['order']}}</td>
                           <td>{{$item->data['body']}}</td>
-                          {{-- <td>{{$item->product->product_name}}</td>
-                          <td>{{$item->percentage}}</td>
-                          <td>{{$item->start}}</td>
-                          <td>{{$item->end}}</td>  --}}
-                           {{-- <td class="td-actions text-left">
+                          <td>{{$item->created_at}}</td>
+                           <td class="td-actions text-left">
                                 
-                                <form style="display:inline-block;" action="{{route('discount.destroy',['id'=>$item->id])}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                  <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                    <i class="material-icons">delete</i>
-                                  </button>
-                                </form>
-                                <a href="{{route('discount.edit',$item->id)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
-                                   <i class="material-icons">assignment</i>
+                                <a href="{{url($item->data['link'])}}"  rel="tooltip" title="Link" class="btn btn-primary btn-link btn-sm">
+                                   <i class="material-icons">library_books</i>
                                 </a>
+                               @if ($item->read_at == null)
+                                  <a href="{{route('admin.markAsRead',['notification'=>$item])}}"  rel="tooltip" title="Mark As Read" class="btn btn-success btn-link btn-sm">
+                                   <i class="material-icons">visibility</i>
+                                </a>
+                               @endif
                             
                               </td>
-                          </tr> --}}
+                          </tr>
                         @endforeach
                       </tbody>
                     </table>
-                    
+                    @endif
                   </div>
                 </div>
               </div>
             </div>
             
           </div>
+
+          
         </div>
       </div>
       

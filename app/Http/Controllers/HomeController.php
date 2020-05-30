@@ -28,14 +28,15 @@ class HomeController extends Controller
 
     public function notify()
     {
-        $admin = admin::find(2);
-        $details = [
-            'order' => 'Review',
-            'body' => 'User has review our Product!',
-            'link' => url(route('')),
-        ];
-        $admin->notify(new admin_notification($details));
-        return ('done');
+        
+        return view('layout.user.notify');
+    }
+
+    public function markAsRead()
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return redirect()->back();
     }
 
     function detail_product($id)

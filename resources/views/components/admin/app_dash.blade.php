@@ -483,6 +483,7 @@
     });
   </script>
   @yield('timer');
+  @yield('charts')
 </body>
 
 </html>

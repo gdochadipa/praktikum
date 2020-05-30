@@ -61,8 +61,6 @@ class admin_notification extends Notification
 
     // public function toDatabase($notifiable)
     // {
-    //     return [
-    //         'data' => $this->post['body']
-    //     ];
+    //     return $this->post;
     // }
 }

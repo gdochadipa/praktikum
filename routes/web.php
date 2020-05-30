@@ -18,7 +18,7 @@ Route::get('/', 'HomeController@dashboard')->name('dashboard');
 Route::get('/province', 'HomeController@getProvince')->name('province');
 Route::get('/city', 'HomeController@getCity')->name('city');
 Route::get('/notify', 'HomeController@notify')->name('notify');
-
+Route::get('/markAsRead', 'HomeController@markAsRead')->name('markAsRead');
 Route::prefix('product')->group(function () {
     Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
@@ -148,7 +148,15 @@ Route::prefix('admin')->group(function(){
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));
     });*/
-    
+    Route::get('markAsRead/{notification}', function ($notification) {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('admin.markAsRead')->middleware('auth:admin');
+
+    Route::get('markAsReadAll/', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('admin.markAsReadAll')->middleware('auth:admin');
 
     Route::get('/logout', 'AdminController@logout')->name('admin.logout')->middleware('auth:admin');
 

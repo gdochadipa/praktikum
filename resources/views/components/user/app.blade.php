@@ -24,10 +24,10 @@
             <script src={{asset('admin/assets/js/core/jquery.min.js')}}></script>
               <style>
                 .header-bottom .header-right .shopping-card::before{
-                    content: "{{{auth()->user()->unreadNotifications->count()}}}";
+                    content: "";
                 }
                 .header-bottom .header-right .favorit-items::before{
-                    content: "";
+                    content: "{{{auth()->user()->unreadNotifications->count()}}}";
                 }
             </style>
    </head>
@@ -86,7 +86,7 @@
                                     
                                     <li>
                                         <div class="favorit-items">
-                                            <a href="cart.html"><i class="fas fa-shopping-basket"></i></a>
+                                            <a href="{{route('notify')}}"><i class="fas fa-shopping-basket"></i></a>
                                         </div>
                                     </li>
                                     <li>

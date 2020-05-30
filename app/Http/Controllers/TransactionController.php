@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\courier;
+use App\Notifications\user_notification;
+use App\product_review;
+use App\user;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
@@ -24,7 +27,7 @@ class TransactionController extends Controller
      */
     public function update_transaction()
     {
-        $user  =  Auth::user();
+        
         $today = Carbon::now();
         $transaction = transaction::all();
         foreach ($transaction as $index) {
@@ -40,7 +43,8 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transaction = transaction::with('user','courier')->paginate(15);
+        $this->update_transaction();
+        $transaction = transaction::with('user','courier')->orderBy('id','DESC')->paginate(15);
         return view('layout.admin.transaction',compact('transaction'));
     }
 
@@ -184,6 +188,13 @@ class TransactionController extends Controller
         if($transaction->save()){
             $getTrans = transaction::where('user_id','=', $user->id)->where('status','=', 'unverified')
             ->orderBy('id','desc')->first();
+            $admin = admin::find(2);
+            $details = [
+                'order' => 'Transaction',
+                'body' => 'User has Buy our Product!',
+                'link' => url(route('transaction.edit', ['transaction' => $getTrans])),
+            ];
+            $admin->notify(new admin_notification($details));
              foreach ($carts as $cart ){
                 $transaction_det = new transaction_detail();
                 $transaction_det->transaction_id = $getTrans->id;
@@ -207,13 +218,7 @@ class TransactionController extends Controller
                 $cart->status = 'checkedout';
                 $cart->save();
 
-                $admin = admin::find(2);
-                $details = [
-                        'order' => 'Transaction',
-                        'body' => 'User has Buy our Product!',
-                        'link' => url(route('transaction.edit', ['transaction' => $getTrans])),
-                    ];
-                $admin->notify(new admin_notification($details));
+                
              }
              $getTrans->sub_total = $subtotal;
              $total = $subtotal + $request->cost;
@@ -246,7 +251,7 @@ class TransactionController extends Controller
         $admin = admin::find(2);
         $details = [
             'order' => 'Transaction',
-            'body' => 'User has Buy our Product!',
+            'body' => 'User has give Proof of payment!',
             'link' => url(route('transaction.edit', ['transaction' => $transaction])),
         ];
         $admin->notify(new admin_notification($details));
@@ -318,7 +323,16 @@ class TransactionController extends Controller
     public function update_admin($id, $status){
         $transaction= transaction::find($id);
         $transaction->status = $status;
-        
+
+       
+        $user = user::find($transaction->user_id);
+        $details = [
+            'order' => 'Response',
+            'body' => 'Admin has update your transaction!',
+            'link' => url(route('user.transaction.showConfirmation', ['id' => $id])),
+        ];
+        $user->notify(new user_notification($details));
+
         if ($transaction->save()) {
             return redirect()->back()->with("success", "Successfully Edit Status");
         }

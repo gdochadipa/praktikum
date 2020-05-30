@@ -1,6 +1,6 @@
 @extends('components.user.app')
 @section('title')
-    Confirmation
+    History
 @endsection
 @section('component')
 

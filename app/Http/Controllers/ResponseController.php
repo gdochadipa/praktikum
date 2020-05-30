@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\response ;
 use App\product_review;
 use App\admin;
+use App\user;
 use Auth as Auth;
-
+use App\Notifications\user_notification;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Http\Request;
 
@@ -71,6 +72,14 @@ class ResponseController extends Controller
         $response->content = $request->content;
 
         if ($response->save()) {
+            $product_review = product_review::find($request->review_id);
+            $user = user::find($product_review->user_id);
+            $details = [
+                'order' => 'Response',
+                'body' => 'Admin has respond your review!',
+                'link' => url(route('detail_product', ['id' => $product_review->product_id])),
+            ];
+            $user->notify(new user_notification($details));
             return redirect()->intended(route('admin.product'))->with("success", "Successfully Add Product");
         }
         return redirect()->back()->with('error', 'Please fill in all fields with valid value');

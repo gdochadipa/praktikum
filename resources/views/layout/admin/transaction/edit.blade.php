@@ -78,6 +78,9 @@
                                     <input type="text" readonly name="proof_of_payment" value="{{$transaction[0]->proof_of_payment}}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
+                                  <img src="{{asset('proof_of_payment/'.$transaction[0]->proof_of_payment)}}" width="150px" height="150px"  alt="">
+                                </div>
+                                <div class="form-group bmd-form-group">
                                   
                                   @if ($transaction[0]->status=='unverified')
                                       
