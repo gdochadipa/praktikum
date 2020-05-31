@@ -15,7 +15,7 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">Notification</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('discount.add')}}" class="btn btn-primary header-btn"><i class="material-icons">visibility</i> Mark All as Read</a>
+                <li class="d-none d-lg-block"> <a href="{{route('admin.markAsReadAll')}}" class="btn btn-primary header-btn"><i class="material-icons">visibility</i> Mark All as Read</a>
                     </li>
                 </div>
                 <div class="card-body">
@@ -62,7 +62,7 @@
                                    <i class="material-icons">library_books</i>
                                 </a>
                                @if ($item->read_at == null)
-                                  <a href="{{route('admin.markAsRead',['notification'=>$item])}}"  rel="tooltip" title="Mark As Read" class="btn btn-success btn-link btn-sm">
+                                  <a href="{{route('admin.markAsRead')}}"  rel="tooltip" title="Mark As Read" class="btn btn-success btn-link btn-sm">
                                    <i class="material-icons">visibility</i>
                                 </a>
                                @endif

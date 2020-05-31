@@ -148,7 +148,7 @@ Route::prefix('admin')->group(function(){
     /*Route::get('/addcourier', function(){
         return view('CreateController', compact('courier'));
     });*/
-    Route::get('markAsRead/{notification}', function ($notification) {
+    Route::get('markAsRead/', function () {
         auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     })->name('admin.markAsRead')->middleware('auth:admin');
