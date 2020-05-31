@@ -201,7 +201,7 @@ class ProductController extends Controller
         $product->delete_at = Carbon::now();
         $product->save();
         // $product->delete();
-        return redirect()->intended(route('admin.product'));
+        return redirect()->intended(route('admin.product'))->with("success", "Successfully Delete Product");;
     }
 
     public function delete_image($id)
