@@ -8,12 +8,14 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-12">
-          <div class="product_img_slide owl-carousel">
+          <div class="row gallery-item">
             @foreach ($product_images as $image)
-           
-             <div class="single_product_img" style="">
-              <img src="{{asset('product_images/'.$image->image_name)}}" style="width:500px; height:500px; text-align: center" alt="#" class="img-fluid">
-            </div>
+            
+            <div class="col-md-4">
+						<a href="{{asset('product_images/'.$image->image_name)}}" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url({{asset('product_images/'.$image->image_name)}});"></div>
+						</a>
+					</div>
             @endforeach
             
           </div>

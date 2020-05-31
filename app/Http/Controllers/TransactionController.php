@@ -28,15 +28,22 @@ class TransactionController extends Controller
      */
     public function update_transaction()
     {
-        
+
         $today = Carbon::now();
-        $transaction = transaction::all();
+        $transaction = transaction::where('status', '=', 'unverified')->get();
         foreach ($transaction as $index) {
             $expired = Carbon::parse($index->timeout);
-            if ($today->lte($expired) && $index->proof_of_payment==null) {
-                
+            if (!$today->lte($expired) && $index->proof_of_payment == null) {
+
                 $index->status = 'expired';
                 $index->save();
+                $user = user::find($index->user_id);
+                $details = [
+                    'order' => 'Response',
+                    'body' => 'You transaction has Expired!',
+                    'link' => url(route('user.transaction.showConfirmation', ['id' => $index->id])),
+                ];
+                $user->notify(new user_notification($details));
             }
         }
         

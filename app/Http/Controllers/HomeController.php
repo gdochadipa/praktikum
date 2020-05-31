@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Notifications\admin_notification;
 use Illuminate\Http\Request;
 use App\admin;
+use App\Notifications\user_notification;
 use App\product;
 use App\product_images;
 use App\product_review;
 use App\response;
+use App\transaction;
+use App\user;
 use GuzzleHttp\Client;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -20,8 +24,31 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    public function update_transaction()
+    {
+
+        $today = Carbon::now();
+        $transaction = transaction::where('status','=', 'unverified')->get();
+        foreach ($transaction as $index) {
+            $expired = Carbon::parse($index->timeout);  
+            if (!$today->lte($expired) && $index->proof_of_payment == null) {
+                
+                $index->status = 'expired';
+                $index->save();
+                $user = user::find($index->user_id);
+                $details = [
+                    'order' => 'Response',
+                    'body' => 'You transaction has Expired!',
+                    'link' => url(route('user.transaction.showConfirmation', ['id' => $index->id])),
+                ];
+                $user->notify(new user_notification($details));
+            }
+        }
+    }
+
         public function dashboard()
     {
+        $this->update_transaction();
         $product = product::where('delete_at','=',null)->paginate(9);
         return view('layout.user.index',compact('product'));
     }

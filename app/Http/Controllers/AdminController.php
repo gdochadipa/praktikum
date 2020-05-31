@@ -7,6 +7,7 @@ use App\transaction;
 use Illuminate\Http\Request;
 use App\admin as Admin;
 use App\Notifications\admin_notification;
+use App\Notifications\user_notification;
 use Auth as Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,28 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
+    public function update_transaction()
+    {
+
+        $today = Carbon::now();
+        $transaction = transaction::where('status', '=', 'unverified')->get();
+        foreach ($transaction as $index) {
+            $expired = Carbon::parse($index->timeout);
+            if (!$today->lte($expired) && $index->proof_of_payment == null) {
+
+                $index->status = 'expired';
+                $index->save();
+                $user = user::find($index->user_id);
+                $details = [
+                    'order' => 'Response',
+                    'body' => 'You transaction has Expired!',
+                    'link' => url(route('user.transaction.showConfirmation', ['id' => $index->id])),
+                ];
+                $user->notify(new user_notification($details));
+            }
+        }
+    }
+
     public function showLoginForm()
     {
         return view('auth.login_admin');
@@ -37,6 +60,7 @@ class AdminController extends Controller
         //jumlah transaksi bulan ini udah
         //jumlah transaksi tahun ini
         //jumlah transaksi tiap tahun
+        $this->update_transaction();
         $allMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         $month = date('m');
         $year = date('Y');
