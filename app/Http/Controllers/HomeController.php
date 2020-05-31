@@ -22,7 +22,7 @@ class HomeController extends Controller
 
         public function dashboard()
     {
-        $product = product::paginate(9);
+        $product = product::where('delete_at','=',null)->paginate(9);
         return view('layout.user.index',compact('product'));
     }
 

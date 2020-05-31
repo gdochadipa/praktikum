@@ -12,13 +12,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use File;
+use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
 {
 
     public function index()
     {
-        $all_product = product::paginate(15);
+        $all_product = product::where('delete_at','=',null)->paginate(15);
         return view('layout.admin.product',compact('all_product'));
     }
 
@@ -64,6 +65,7 @@ class ProductController extends Controller
             $product->product_rate = $request->product_rate;
             $product->stock = $request->stock;
             $product->weight = $request->weight;
+            $product->delete_at = null;
             $product->save();
 
 
@@ -196,7 +198,7 @@ class ProductController extends Controller
         // $product = product::find($product);
         
         $product = product::find($id);
-        $product->stock = 0;
+        $product->delete_at = Carbon::now();
         $product->save();
         // $product->delete();
         return redirect()->intended(route('admin.product'));

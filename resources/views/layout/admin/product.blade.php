@@ -76,13 +76,13 @@
                             </td>
                             <td class="td-actions text-left">
                                 
-                                {{-- <form style="display:inline-block;" action="{{route('product.destroy',['id'=>$produk->id])}}" method="post">
+                                <form style="display:inline-block;" action="{{route('product.destroy',['id'=>$produk->id])}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                   <button type="submit" value="Delete"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                     <i class="material-icons">delete</i>
                                   </button>
-                                </form> --}}
+                                </form>
                                 <a href="{{route('product.edit',$produk->id)}}"  rel="tooltip" title="Review Product" class="btn btn-primary btn-link btn-sm">
                                    <i class="material-icons">assignment</i>
                                 </a>
