@@ -104,7 +104,7 @@
                 <div class="card-header card-header-tabs card-header-primary">
                   <div class="nav-tabs-navigation">
                     <div class="nav-tabs-wrapper">
-                      <span class="nav-tabs-title">Notification</span>
+                       <h4 class="card-title">Notification</h4>
                       
                     </div>
                   </div>
@@ -142,7 +142,7 @@
               <div class="card">
                 <div class="card-header card-header-warning">
                   <h4 class="card-title">New Transaction</h4>
-                  <p class="card-category">New employees on 15th September, 2016</p>
+                  <p class="card-category"></p>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
