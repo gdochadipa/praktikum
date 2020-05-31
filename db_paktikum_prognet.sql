@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Bulan Mei 2020 pada 15.42
+-- Waktu pembuatan: 31 Bulan Mei 2020 pada 07.43
 -- Versi server: 10.4.10-MariaDB-log
 -- Versi PHP: 7.3.12
 
@@ -69,7 +69,11 @@ CREATE TABLE `admin_notifications` (
 --
 
 INSERT INTO `admin_notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
-('0894b150-1384-4400-bb13-749b6398a547', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Review\",\"body\":\"User has review our Product!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/product\\/6\\/edit\"}', NULL, '2020-05-29 03:24:32', '2020-05-29 03:24:32');
+('0894b150-1384-4400-bb13-749b6398a547', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Review\",\"body\":\"User has review our Product!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/product\\/6\\/edit\"}', '2020-05-29 06:32:31', '2020-05-29 03:24:32', '2020-05-29 06:32:31'),
+('444b5c11-f02f-4a84-b901-f91843067684', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Transaction\",\"body\":\"User has Buy our Product!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/transaction\\/4\\/edit\"}', '2020-05-29 22:10:45', '2020-05-29 21:40:53', '2020-05-29 22:10:45'),
+('87b739cf-561c-4933-9e1a-26b5068d884f', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Transaction\",\"body\":\"User has Buy our Product!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/transaction\\/5\\/edit\"}', '2020-05-29 22:10:44', '2020-05-29 22:05:36', '2020-05-29 22:10:44'),
+('944574a3-9cec-4a81-a2a8-39689ed447d8', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Transaction\",\"body\":\"User has give Proof of payment!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/transaction\\/5\\/edit\"}', '2020-05-29 22:10:44', '2020-05-29 22:06:23', '2020-05-29 22:10:44'),
+('c1fe80c0-263d-494c-a56d-158e1f652587', 'App\\Notifications\\admin_notification', 'App\\admin', 2, '{\"order\":\"Transaction\",\"body\":\"User has Buy our Product!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/transaction\\/4\\/edit\"}', '2020-05-29 22:10:44', '2020-05-29 21:44:21', '2020-05-29 22:10:44');
 
 -- --------------------------------------------------------
 
@@ -95,7 +99,10 @@ INSERT INTO `carts` (`id`, `user_id`, `product_id`, `qty`, `created_at`, `update
 (1, 1, 6, 3, '2020-05-14 05:59:21', '2020-05-23 21:00:04', 'checkedout'),
 (2, 1, 7, 2, '2020-05-23 20:44:22', '2020-05-23 21:00:12', 'checkedout'),
 (3, 1, 8, 2, '2020-05-23 23:14:04', '2020-05-27 23:10:58', 'checkedout'),
-(4, 1, 6, 1, '2020-05-27 23:08:57', '2020-05-27 23:10:59', 'checkedout');
+(4, 1, 6, 1, '2020-05-27 23:08:57', '2020-05-27 23:10:59', 'checkedout'),
+(5, 1, 8, 1, '2020-05-29 21:33:13', '2020-05-29 21:40:53', 'checkedout'),
+(6, 1, 7, 2, '2020-05-29 21:38:31', '2020-05-29 21:40:53', 'checkedout'),
+(7, 1, 7, 1, '2020-05-29 22:04:22', '2020-05-29 22:05:36', 'checkedout');
 
 -- --------------------------------------------------------
 
@@ -221,6 +228,7 @@ CREATE TABLE `products` (
   `product_rate` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `delete_at` timestamp NULL DEFAULT NULL,
   `stock` int(10) DEFAULT NULL,
   `weight` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -229,10 +237,10 @@ CREATE TABLE `products` (
 -- Dumping data untuk tabel `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `price`, `description`, `product_rate`, `created_at`, `updated_at`, `stock`, `weight`) VALUES
-(6, 'Gucci Bag', 10000000, 'Tas ukuran sedang', 3, '2020-04-15 05:22:39', '2020-05-29 03:24:30', 5, 5),
-(7, 'Gucci Bag II', 1000000, 'Tas ukuran sedang', 3, '2020-04-15 07:08:10', '2020-04-15 07:08:10', 10, 4),
-(8, 'Gucci Bag IV', 20000000, 'Tas ukuran sedang', 3, '2020-05-06 09:05:31', '2020-05-27 23:17:18', 10, 5);
+INSERT INTO `products` (`id`, `product_name`, `price`, `description`, `product_rate`, `created_at`, `updated_at`, `delete_at`, `stock`, `weight`) VALUES
+(6, 'Gucci Bag', 10000000, 'Tas ukuran sedang', 3, '2020-04-15 05:22:39', '2020-05-29 03:24:30', NULL, 5, 5),
+(7, 'Gucci Bag II', 1000000, 'Tas ukuran sedang', 3, '2020-04-15 07:08:10', '2020-04-15 07:08:10', NULL, 10, 4),
+(8, 'Gucci Bag IV', 20000000, 'Tas ukuran sedang', 3, '2020-05-06 09:05:31', '2020-05-30 20:50:09', '2020-05-30 20:50:09', 10, 5);
 
 -- --------------------------------------------------------
 
@@ -344,6 +352,14 @@ CREATE TABLE `responses` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `responses`
+--
+
+INSERT INTO `responses` (`id`, `review_id`, `admin_id`, `content`, `created_at`, `updated_at`) VALUES
+(4, 14, 2, 'Nanti saya kasi gan', '2020-05-29 20:27:53', '2020-05-29 20:27:53'),
+(5, 15, 2, 'Jelek barangnya', '2020-05-29 20:53:21', '2020-05-29 20:53:21');
+
 -- --------------------------------------------------------
 
 --
@@ -374,7 +390,9 @@ CREATE TABLE `transactions` (
 INSERT INTO `transactions` (`id`, `timeout`, `address`, `regency`, `province`, `total`, `shipping_cost`, `sub_total`, `user_id`, `courier_id`, `proof_of_payment`, `created_at`, `updated_at`, `status`) VALUES
 (1, '2020-05-29 00:00:00', 'Jln. Rumah sendii', 'Badung', 'Bali', 2000000.00, 100000.00, 2100000.00, 1, 1, '', '2020-05-01 16:00:00', '2020-05-27 22:21:10', 'expired'),
 (2, '2020-05-25 05:08:27', 'Link. Padang Udayana', 'Denpasar', 'Bali', 32015000.00, 15000.00, 32000000.00, 1, 6, '1590303208_.jpeg', '2020-05-23 21:08:27', '2020-05-23 22:53:28', 'unverified'),
-(3, '2020-05-29 07:10:57', 'Link. Padang Udayana', 'Denpasar', 'Bali', 50008000.00, 8000.00, 0.00, 1, 1, '1590650063_.jpeg', '2020-05-27 23:10:58', '2020-05-27 23:14:24', 'unverified');
+(3, '2020-05-29 07:10:57', 'Link. Padang Udayana', 'Denpasar', 'Bali', 50008000.00, 8000.00, 0.00, 1, 1, '1590650063_.jpeg', '2020-05-27 23:10:58', '2020-05-27 23:14:24', 'unverified'),
+(4, '2020-05-31 05:40:52', 'Link. Padang Udayana', 'Bangka', 'Bangka Belitung', 22044000.00, 44000.00, 22000000.00, 1, 1, '1590817461_.jpeg', '2020-05-29 21:40:53', '2020-05-29 21:51:00', 'verified'),
+(5, '2020-05-31 06:05:33', 'Link. Padang Udayana', 'Denpasar', 'Bali', 1011000.00, 11000.00, 1000000.00, 1, 1, '1590818783_.jpeg', '2020-05-29 22:05:33', '2020-05-29 22:07:58', 'verified');
 
 -- --------------------------------------------------------
 
@@ -402,7 +420,10 @@ INSERT INTO `transaction_details` (`id`, `transaction_id`, `product_id`, `qty`, 
 (2, 2, 6, 3, 0, 10000000, '2020-05-23 21:08:28', '2020-05-23 21:08:28'),
 (3, 2, 7, 2, 0, 1000000, '2020-05-23 21:08:28', '2020-05-23 21:08:28'),
 (4, 3, 8, 2, 0, 20000000, '2020-05-27 23:10:58', '2020-05-27 23:10:58'),
-(5, 3, 6, 1, 0, 10000000, '2020-05-27 23:10:59', '2020-05-27 23:10:59');
+(5, 3, 6, 1, 0, 10000000, '2020-05-27 23:10:59', '2020-05-27 23:10:59'),
+(6, 4, 8, 1, 0, 20000000, '2020-05-29 21:40:53', '2020-05-29 21:40:53'),
+(7, 4, 7, 2, 0, 1000000, '2020-05-29 21:40:53', '2020-05-29 21:40:53'),
+(8, 5, 7, 1, 0, 1000000, '2020-05-29 22:05:36', '2020-05-29 22:05:36');
 
 -- --------------------------------------------------------
 
@@ -455,9 +476,9 @@ CREATE TABLE `user_notifications` (
 --
 
 INSERT INTO `user_notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
-('1d40575e-58f0-4fc3-a409-3d095051a7f0', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"data\":\"This is our example notification tutorial\"}', NULL, '2020-05-28 21:39:20', '2020-05-28 21:39:20'),
-('59f2a8a2-5993-48eb-93c2-bf2eab5d416f', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"data\":\"This is our example notification tutorial\"}', NULL, '2020-05-28 23:40:04', '2020-05-28 23:40:04'),
-('9d99cf72-a50c-4f6c-97d3-c916d4e780d6', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"data\":\"This is our example notification tutorial\"}', NULL, '2020-05-29 02:28:58', '2020-05-29 02:28:58');
+('25c632e1-3ee2-44f4-81e9-697b544370d9', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"order\":\"Response\",\"body\":\"Admin has update your transaction!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/user\\/transaction\\/confirm\\/5\"}', '2020-05-29 22:11:52', '2020-05-29 22:07:58', '2020-05-29 22:11:52'),
+('c4cb61b7-ec82-4fba-b628-f2cfe7ce19eb', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"order\":\"Response\",\"body\":\"Admin has respond your review!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/product\\/6\"}', '2020-05-29 21:31:02', '2020-05-29 20:54:43', '2020-05-29 21:31:02'),
+('cf4bd0fa-8654-4aca-b16f-06926fe9e7b0', 'App\\Notifications\\user_notification', 'App\\user', 1, '{\"order\":\"Response\",\"body\":\"Admin has update your transaction!\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/user\\/transaction\\/confirm\\/4\"}', '2020-05-29 22:11:52', '2020-05-29 21:51:00', '2020-05-29 22:11:52');
 
 --
 -- Indexes for dumped tables
@@ -599,7 +620,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `couriers`
@@ -653,19 +674,19 @@ ALTER TABLE `product_reviews`
 -- AUTO_INCREMENT untuk tabel `responses`
 --
 ALTER TABLE `responses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
