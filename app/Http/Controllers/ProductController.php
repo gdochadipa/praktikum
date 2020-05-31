@@ -191,9 +191,14 @@ class ProductController extends Controller
      * @param  \App\courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product $product)
+    public function destroy($id)
     {
-        $product->delete();
+        // $product = product::find($product);
+        
+        $product = product::find($id);
+        $product->stock = 0;
+        $product->save();
+        // $product->delete();
         return redirect()->intended(route('admin.product'));
     }
 

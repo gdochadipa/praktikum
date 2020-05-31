@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\courier;
 use App\Notifications\user_notification;
+use App\product;
 use App\product_review;
 use App\user;
 use Illuminate\Support\Facades\Auth;
@@ -217,7 +218,9 @@ class TransactionController extends Controller
                 $subtotal += $price;
                 $cart->status = 'checkedout';
                 $cart->save();
-
+                $product = product::find($cart->product_id);
+                $product->stock = $product->stock - $transaction_det->qty;
+                $product->save();
                 
              }
              $getTrans->sub_total = $subtotal;
@@ -332,6 +335,7 @@ class TransactionController extends Controller
             'link' => url(route('user.transaction.showConfirmation', ['id' => $id])),
         ];
         $user->notify(new user_notification($details));
+        
 
         if ($transaction->save()) {
             return redirect()->back()->with("success", "Successfully Edit Status");
