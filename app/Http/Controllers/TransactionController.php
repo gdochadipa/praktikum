@@ -212,10 +212,11 @@ class TransactionController extends Controller
                 
                 $discount = DB::table('discounts')->where('start', '<=', $todayD)
                     ->where('end', '>=', $todayD)->where('id_product', '=', $cart->product->id)->get();
+                    //dd($discount);
                 if ($discount->isEmpty()) {
                     $diskon = 0;
                 } else {
-                    $diskon = ($cart->product->price * $discount->percentage) / 100;
+                    $diskon = ($cart->product->price * $discount[0]->percentage) / 100;
                 }
                 $transaction_det->discount = $diskon;
                 $transaction_det->selling_price = $cart->product->price - $diskon;

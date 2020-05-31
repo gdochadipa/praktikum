@@ -118,7 +118,7 @@ Route::prefix('admin/response')->group(function () {
 
 Route::prefix('admin/discount')->group(function () {
     Route::get('/', 'DiscountController@index')->name('admin.discount')->middleware('auth:admin');
-    Route::get('/add', 'DiscountController@create')->name('discount.add')->middleware('auth:admin');
+    Route::get('/add/{id}', 'DiscountController@create')->name('discount.add')->middleware('auth:admin');
     Route::get('/{discount}/edit', 'DiscountController@edit')->name('discount.edit')->middleware('auth:admin');
     Route::post('/store', 'DiscountController@store')->name('discount.store')->middleware('auth:admin');
     Route::put('/{id}/update', 'DiscountController@update')->name('discount.update')->middleware('auth:admin');

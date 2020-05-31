@@ -53,10 +53,11 @@
                                             $today = date('Y-m-d');
                                             $discount = DB::table('discounts')->where('start','<=',$today)
                                             ->where('end','>=',$today)->where('id_product','=', $cart->product->id)->get();
+                                            //dd($discount);
                                             if($discount->isEmpty()){
                                                 $diskon = 0;
                                             }else{
-                                                $diskon = ($cart->product->price*$discount->percentage)/100;
+                                                $diskon = ($cart->product->price* $discount[0]->percentage)/100;
                                             }
                                             $disc_price = $cart->product->price - $diskon;
                                             $price = $disc_price*$cart->qty;

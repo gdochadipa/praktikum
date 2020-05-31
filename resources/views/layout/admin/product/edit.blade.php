@@ -295,7 +295,7 @@
                 <div class="card-header card-header-info">
                     <i class="material-icons">content_paste</i>
                   <h4 class="card-title ">Discount</h4>
-                <li class="d-none d-lg-block"> <a href="{{route('discount.add')}}" class="btn btn-primary header-btn"><i class="material-icons">add</i>Add Discount</a>
+                <li class="d-none d-lg-block"> <a href="{{route('discount.add',['id'=>$product->id])}}" class="btn btn-primary header-btn"><i class="material-icons">add</i>Add Discount</a>
                     </li>
                 </div>
                 <div class="card-body">

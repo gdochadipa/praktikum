@@ -25,10 +25,10 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         $product = product::all();
-        return view('layout.admin.discount.add',compact('product'));
+        return view('layout.admin.discount.add',compact('product','id'));
     }
 
     /**
@@ -39,8 +39,7 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id_product' => ['required'],
+        $request->validate([    
             'percentage' => ['required', 'between:0,99.99'],
             'start' => ['required'],
             'end' => ['required']
@@ -53,7 +52,7 @@ class DiscountController extends Controller
         $discount->end = $request->end;
         
         if($discount->save()){
-            return redirect()->intended(route('admin.discount'))->with("success", "Successfully Add Discount");
+            return redirect()->intended(route('product.edit',['id'=> $request->id_product]))->with("success", "Successfully Add Discount");
         }
         return redirect()->back()->withInput($request->only('percentage', 'start', 'end'))->with("error", "Failed Add Discount");
 
@@ -115,8 +114,9 @@ class DiscountController extends Controller
      * @param  \App\discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(discount $discount)
+    public function destroy($id)
     {
+        $discount = discount::find($id);
         $discount->delete();
         return redirect()->back()->with("success", "Successfully Delete Discount");
     }

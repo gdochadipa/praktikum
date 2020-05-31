@@ -36,16 +36,8 @@
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
-                                   <select  class="form-control" name="id_product" data-style=" btn btn-link">
-                                          @if ($product->isEmpty())
-                                              <option disabled>Product</option>
-                                          @else
-                                              <option selected disabled>--  Product --</option>
-                                              @foreach ($product as $p)
-                                                <option value="{{$p->id}}">{{$p->product_name}}</option>
-                                              @endforeach
-                                          @endif
-                                   <select>
+                                    
+                                    <input type="hidden" name="id_product"  value="{{$id}}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Percentage</label>
