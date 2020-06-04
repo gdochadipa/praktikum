@@ -271,6 +271,14 @@ class TransactionController extends Controller
         return redirect()->back();
     }
 
+    public function onCanceled($id)
+    {
+        $transaction = transaction::find($id);
+        $transaction->status = 'canceled';
+        $transaction->save();
+        return redirect()->back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

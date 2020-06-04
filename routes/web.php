@@ -35,6 +35,7 @@ Route::prefix('/user/transaction')->group(function () {
     Route::get('/history', 'TransactionController@history')->name('user.transaction.history');
     Route::get('/confirm/{id}', 'TransactionController@showConfirmation')->name('user.transaction.showConfirmation');
     Route::get('/check', 'TransactionController@check')->name('user.transaction.check');
+    Route::get('/onCanceled/{id}', 'TransactionController@onCanceled')->name('user.transaction.onCanceled');
     Route::post('/courier', 'TransactionController@courierPilih')->name('user.transaction.courierPilih');
     Route::post('/purchase', 'TransactionController@purchase')->name('user.transaction.purchase');
     Route::post('/proof/{id}', 'TransactionController@proof')->name('user.transaction.proof');

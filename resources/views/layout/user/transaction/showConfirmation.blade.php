@@ -127,10 +127,14 @@
                 <input  class="genric-btn primary radius" value="Submit" type="submit">
               </div>
             </form>
+            <div class="mt-10">
+                 <a href="{{route('user.transaction.onCanceled',['id'=>  $transaction->id])}}" class="genric-btn danger radius"> Cancel Transaction</a>
+              </div>
+
         </div>
       </div>
       @endif
-      >
+      
     </div>
   </section>
   <!--================ confirmation part end =================-->
